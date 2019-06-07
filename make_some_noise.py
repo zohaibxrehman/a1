@@ -9,8 +9,8 @@ University of Toronto
 This file contains classes that describe sound waves, instruments that play
 these sounds and a function that plays multiple instruments simultaneously.
 
-As discussed in the handout, you may not change any of the public behaviour 
-(attributes, methods) given in the starter code, but you can definitely add 
+As discussed in the handout, you may not change any of the public behaviour
+(attributes, methods) given in the starter code, but you can definitely add
 new attributes, functions, classes and methods to complete your work here.
 
 """
@@ -22,32 +22,52 @@ from helpers import play_sound, play_sounds, make_sine_wave_array
 
 
 class SimpleWave:
-    """ TODO: write a docstring for this class """
-    def __init__(self, frequency: int, 
+    """
+
+
+    === Attributes ===
+    freq: frequency of the simple wave
+    amp: amplitude of the simple wave
+
+    """
+    freq: int #FIXME WHAT IS TYPE? INT OR FLOAT
+    duration: float
+    amp: float
+
+    def __init__(self, frequency: int,
                  duration: float, amplitude: float) -> None:
-        """ TODO: write a docstring for this method """
-        pass  # TODO: finish this method body
+        """Initialises the simple wave.
+        """
+        self.freq = frequency
+        self.duration = duration
+        self.amp = amplitude
+        #FIXME WHAT IS DURATION FOR?
 
     def __eq__(self, other: SimpleWave) -> bool:
-        """ TODO: write a docstring for this method """
-        pass  # TODO: finish this method body
+        """Return true if this simple wave and other simple wave are equal.
+        """
+        return (self.freq == other.freq and self.duration == other.duration and
+                self.amp == other.amp)
 
     def __ne__(self, other: SimpleWave) -> bool:
-        """ TODO: write a docstring for this method """
-        pass  # TODO: finish this method body
+        """Return true if this simple wave and other simple wave are not
+        equal.
+        """
+        return not self == other
 
-    def __add__(self, 
+    def __add__(self,
                 other: ANYWAVE) -> ComplexWave:
         """ TODO: write a docstring for this method """
-        pass  # TODO: finish this method body
 
     def get_duration(self) -> float:
-        """ TODO: write a docstring for this method """
-        pass  # TODO: finish this method body
+        """Return duration of a SimpleWave instance in seconds."""
+        return self.duration
 
     def play(self) -> numpy.ndarray:
-        """ TODO: write a docstring for this method """
-        pass  # TODO: finish this method body
+        """Return a numpy array which represents a simple sine wave based on the
+         frequency and duration of the simple wave.
+         """
+        return make_sine_wave_array(self.freq, self.duration)
 
 
 class ComplexWave:
@@ -56,7 +76,7 @@ class ComplexWave:
         """ TODO: write a docstring for this method """
         pass  # TODO: finish this method body
 
-    def __add__(self, 
+    def __add__(self,
                 other: ANYWAVE) -> ComplexWave:
         """ TODO: write a docstring for this method """
         pass  # TODO: finish this method body
@@ -71,23 +91,23 @@ class ComplexWave:
 
     def get_waves(self) -> typing.List[SimpleWave]:
         """ TODO: write a docstring for this method """
-        pass  # TODO: finish this method body       
+        pass  # TODO: finish this method body
 
     def get_duration(self) -> float:
         """ TODO: write a docstring for this method """
-        pass  # TODO: finish this method body 
+        pass  # TODO: finish this method body
 
     def simplify(self) -> None:
-        """ TODO: write a docstring for this method 
-            REMEMBER: this is not a required part of the assignment 
+        """ TODO: write a docstring for this method
+            REMEMBER: this is not a required part of the assignment
         """
-        pass  # TODO: finish this method body 
+        pass  # TODO: finish this method body
 
 
 class Note:
     """ TODO: write a docstring for this class """
     amplitude: float
-    
+
     def __init__(self, waves: typing.List[ANYWAVE]) -> None:
         """ TODO: write a docstring for this method """
         pass  # TODO: finish this method body
@@ -111,12 +131,12 @@ class Note:
 
 class SawtoothWave:
     """ TODO: write a docstring for this class """
-    def __init__(self, frequency: int, 
+    def __init__(self, frequency: int,
                  duration: float, amplitude: float) -> None:
         """ TODO: write a docstring for this method """
         pass  # TODO: finish this method body
 
-    def __add__(self, 
+    def __add__(self,
                 other: ANYWAVE) -> ComplexWave:
         """ TODO: write a docstring for this method """
         pass  # TODO: finish this method body
@@ -131,27 +151,27 @@ class SawtoothWave:
 
     def get_waves(self) -> typing.List[SimpleWave]:
         """ TODO: write a docstring for this method """
-        pass  # TODO: finish this method body       
+        pass  # TODO: finish this method body
 
     def get_duration(self) -> float:
         """ TODO: write a docstring for this method """
-        pass  # TODO: finish this method body 
+        pass  # TODO: finish this method body
 
     def simplify(self) -> None:
-        """ TODO: write a docstring for this method 
-            REMEMBER: this is not a required part of the assignment 
+        """ TODO: write a docstring for this method
+            REMEMBER: this is not a required part of the assignment
         """
-        pass  # TODO: finish this method body 
+        pass  # TODO: finish this method body
 
 
 class SquareWave:
     """ TODO: write a docstring for this class """
-    def __init__(self, frequency: int, 
+    def __init__(self, frequency: int,
                  duration: float, amplitude: float) -> None:
         """ TODO: write a docstring for this method """
         pass  # TODO: finish this method body
 
-    def __add__(self, 
+    def __add__(self,
                 other: ANYWAVE) -> ComplexWave:
         """ TODO: write a docstring for this method """
         pass  # TODO: finish this method body
@@ -166,17 +186,17 @@ class SquareWave:
 
     def get_waves(self) -> typing.List[SimpleWave]:
         """ TODO: write a docstring for this method """
-        pass  # TODO: finish this method body       
+        pass  # TODO: finish this method body
 
     def get_duration(self) -> float:
         """ TODO: write a docstring for this method """
-        pass  # TODO: finish this method body 
+        pass  # TODO: finish this method body
 
     def simplify(self) -> None:
-        """ TODO: write a docstring for this method 
-            REMEMBER: this is not a required part of the assignment 
+        """ TODO: write a docstring for this method
+            REMEMBER: this is not a required part of the assignment
         """
-        pass  # TODO: finish this method body 
+        pass  # TODO: finish this method body
 
 
 class Rest:
@@ -185,7 +205,7 @@ class Rest:
         """ TODO: write a docstring for this method """
         pass  # TODO: finish this method body
 
-    def __add__(self, 
+    def __add__(self,
                 other: ANYWAVE) -> ComplexWave:
         """ TODO: write a docstring for this method """
         pass  # TODO: finish this method body
@@ -200,27 +220,27 @@ class Rest:
 
     def get_waves(self) -> typing.List[SimpleWave]:
         """ TODO: write a docstring for this method """
-        pass  # TODO: finish this method body       
+        pass  # TODO: finish this method body
 
     def get_duration(self) -> float:
         """ TODO: write a docstring for this method """
-        pass  # TODO: finish this method body 
+        pass  # TODO: finish this method body
 
     def simplify(self) -> None:
-        """ TODO: write a docstring for this method 
-            REMEMBER: this is not a required part of the assignment 
+        """ TODO: write a docstring for this method
+            REMEMBER: this is not a required part of the assignment
         """
-        pass  # TODO: finish this method body 
+        pass  # TODO: finish this method body
 
 
 class StutterNote:
     """ TODO: write a docstring for this class """
     amplitude: float
-    
-    def __init__(self, frequency: int, 
+
+    def __init__(self, frequency: int,
                  duration: float, amplitude: float) -> None:
         """ TODO: write a docstring for this method """
-        pass  # TODO: finish this method body 
+        pass  # TODO: finish this method body
 
     def __add__(self, other: Note) -> Note:
         """ TODO: write a docstring for this method """
@@ -248,7 +268,7 @@ class Baliset:
         """ TODO: write a docstring for this method """
         pass  # TODO: finish this method body
 
-    def next_notes(self, 
+    def next_notes(self,
                    note_info: typing.List[typing.Tuple[str, float, float]]
                    ) -> None:
         """ TODO: write a docstring for this method """
@@ -269,7 +289,7 @@ class Holophonor:
         """ TODO: write a docstring for this method """
         pass  # TODO: finish this method body
 
-    def next_notes(self, 
+    def next_notes(self,
                    note_info: typing.List[typing.Tuple[str, float, float]]
                    ) -> None:
         """ TODO: write a docstring for this method """
@@ -290,7 +310,7 @@ class Gaffophone:
         """ TODO: write a docstring for this method """
         pass  # TODO: finish this method body
 
-    def next_notes(self, 
+    def next_notes(self,
                    note_info: typing.List[typing.Tuple[str, float, float]]
                    ) -> None:
         """ TODO: write a docstring for this method """
@@ -303,23 +323,23 @@ class Gaffophone:
 
 def play_song(song_file: str, beat: float) -> None:
     """ TODO: write a docstring for this function """
-    pass  # TODO: finish this function body    
+    pass  # TODO: finish this function body
 
 
-# This is a custom type for type annotations that 
-# refers to any of the following classes (do not 
+# This is a custom type for type annotations that
+# refers to any of the following classes (do not
 # change this code)
-ANYWAVE = typing.TypeVar('ANYWAVE', 
-                         SimpleWave, 
-                         ComplexWave, 
-                         SawtoothWave, 
-                         SquareWave, 
+ANYWAVE = typing.TypeVar('ANYWAVE',
+                         SimpleWave,
+                         ComplexWave,
+                         SawtoothWave,
+                         SquareWave,
                          Rest)
 
 if __name__ == '__main__':
     import python_ta
-    python_ta.check_all(config={'extra-imports': ['helpers', 
-                                                  'typing', 
-                                                  'csv', 
+    python_ta.check_all(config={'extra-imports': ['helpers',
+                                                  'typing',
+                                                  'csv',
                                                   'numpy'],
                                 'disable': ['E9997']})
