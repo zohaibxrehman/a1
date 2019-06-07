@@ -27,8 +27,8 @@ class SimpleWave:
 
     === Attributes ===
     freq: frequency of the simple wave
+    duration: duration of the simple wave
     amp: amplitude of the simple wave
-
     """
     freq: int #FIXME WHAT IS TYPE? INT OR FLOAT
     duration: float
@@ -57,7 +57,9 @@ class SimpleWave:
 
     def __add__(self,
                 other: ANYWAVE) -> ComplexWave:
-        """ TODO: write a docstring for this method """
+        """add"""
+        return ComplexWave([self, other])
+        #FIXME sum of two simple waves.
 
     def get_duration(self) -> float:
         """Return duration of a SimpleWave instance in seconds."""
@@ -71,31 +73,50 @@ class SimpleWave:
 
 
 class ComplexWave:
-    """ TODO: write a docstring for this class """
+    """
+
+
+    === Attributes ===
+    waves: list of simple waves that build this complex wave
+    """
     def __init__(self, waves: typing.List[SimpleWave]) -> None:
-        """ TODO: write a docstring for this method """
-        pass  # TODO: finish this method body
+        """Initialises the complex wave"""
+        self.waves = waves
 
     def __add__(self,
                 other: ANYWAVE) -> ComplexWave:
-        """ TODO: write a docstring for this method """
-        pass  # TODO: finish this method body
+        """Return the sum of a complex wave and another wave."""
+        if isinstance(other, SimpleWave):
+            self.waves.append(other)
+        elif isinstance(other, ComplexWave):
+            self.waves.extend(other.waves)
 
     def complexity(self) -> int:
-        """ TODO: write a docstring for this method """
-        pass  # TODO: finish this method body
+        """Return the coplexity of the complex wave."""
+        return len(self.waves)
 
     def play(self) -> numpy.ndarray:
-        """ TODO: write a docstring for this method """
-        pass  # TODO: finish this method body
+        """Return a numpy array which represents a wave based on the additive
+        synthesis of its simple waves.
+        """
+        if len(self.waves) != 0:
+            arr = self.waves[0].play()
+            for wave in self.waves[1:]:
+                arr = arr + wave.play()
+            return arr / arr.max()
 
     def get_waves(self) -> typing.List[SimpleWave]:
-        """ TODO: write a docstring for this method """
-        pass  # TODO: finish this method body
+        """Return a list of SimpleWave instances that can be added together
+        to represent a ComplexWave instance."""
+        return self.waves
 
     def get_duration(self) -> float:
-        """ TODO: write a docstring for this method """
-        pass  # TODO: finish this method body
+        """Return the duration of the complex wave. This duration is the maximum
+         duration of its simple waves"""
+        lst = []
+        for wave in self.waves:
+            lst.append(wave.duration)
+        return max(lst)
 
     def simplify(self) -> None:
         """ TODO: write a docstring for this method
@@ -337,9 +358,10 @@ ANYWAVE = typing.TypeVar('ANYWAVE',
                          Rest)
 
 if __name__ == '__main__':
-    import python_ta
-    python_ta.check_all(config={'extra-imports': ['helpers',
-                                                  'typing',
-                                                  'csv',
-                                                  'numpy'],
-                                'disable': ['E9997']})
+    # import python_ta
+    # python_ta.check_all(config={'extra-imports': ['helpers',
+    #                                               'typing',
+    #                                               'csv',
+    #                                               'numpy'],
+    #                             'disable': ['E9997']})
+    pass
