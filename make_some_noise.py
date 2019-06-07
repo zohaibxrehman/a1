@@ -87,9 +87,9 @@ class ComplexWave:
                 other: ANYWAVE) -> ComplexWave:
         """Return the sum of a complex wave and another wave."""
         if isinstance(other, SimpleWave):
-            self.waves.append(other)
+            return ComplexWave(self.waves + [other])
         elif isinstance(other, ComplexWave):
-            self.waves.extend(other.waves)
+            return ComplexWave(self.waves + other.waves)
 
     def complexity(self) -> int:
         """Return the coplexity of the complex wave."""
@@ -126,28 +126,47 @@ class ComplexWave:
 
 
 class Note:
-    """ TODO: write a docstring for this class """
+    """
+
+    === Attributes ===
+    amplitude: amplitude of the Note
+    waves: list of simple/complex waves that build this note
+    """
     amplitude: float
+    waves: list
 
     def __init__(self, waves: typing.List[ANYWAVE]) -> None:
-        """ TODO: write a docstring for this method """
-        pass  # TODO: finish this method body
+        """Initialise the Note.
+        """
+        self.amplitude = 1
+        self.waves = waves
 
     def __add__(self, other: Note) -> Note:
-        """ TODO: write a docstring for this method """
-        pass  # TODO: finish this method body
+        """Return the sum of this note and the other note. This Note instance,
+        when played, should sound exactly the same as playing the first Note
+        instance followed by the second with no pause in between."""
+        beat = Note(self.waves + other.waves)
+        beat.amplitude = max(self.amplitude, other.amplitude)
+        return beat
 
     def get_waves(self) -> typing.List[ANYWAVE]:
-        """ TODO: write a docstring for this method """
-        pass  # TODO: finish this method body
+        """"""
+        return self.waves
 
     def get_duration(self) -> float:
-        """ TODO: write a docstring for this method """
-        pass  # TODO: finish this method body
+        """ """
+        dur = 0
+        for wave in self.waves:
+            dur = dur + wave.get_duration()
+        return dur
 
     def play(self) -> numpy.ndarray:
-        """ TODO: write a docstring for this method """
-        pass  # TODO: finish this method body
+        """ """
+        if len(self.waves) != 0:
+            arr = self.waves[0].play()
+            for wave in self.waves[1:]:
+                arr = numpy.append(arr, wave.play())
+            return arr * self.amplitude
 
 
 class SawtoothWave:
@@ -364,4 +383,13 @@ if __name__ == '__main__':
     #                                               'csv',
     #                                               'numpy'],
     #                             'disable': ['E9997']})
-    pass
+
+
+    ## test step 4
+    # waves = []
+    # for i in range(1, 6):
+    #     waves.append(SimpleWave(440 * i, 1, 1))
+    # complex1 = ComplexWave(waves[:2])
+    # complex2 = ComplexWave(waves[2:])
+    # my_note = Note([complex1, complex2])
+    # play_sound(my_note)
