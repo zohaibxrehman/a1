@@ -101,8 +101,12 @@ class ComplexWave:
         """
         if len(self.waves) != 0:
             arr = self.waves[0].play()
+            print(len(arr))
             for wave in self.waves[1:]:
+                print(len(wave.play()))
                 arr = arr + wave.play()
+                #numpy.add?
+                print(len(arr))
             return arr / arr.max()
 
     def get_waves(self) -> typing.List[SimpleWave]:
@@ -144,17 +148,24 @@ class Note:
     def __add__(self, other: Note) -> Note:
         """Return the sum of this note and the other note. This Note instance,
         when played, should sound exactly the same as playing the first Note
-        instance followed by the second with no pause in between."""
+        instance followed by the second with no pause in between.
+        The amplitude of the result will be the greatest amplitude of the two
+        combined Note instances.
+        """
         beat = Note(self.waves + other.waves)
         beat.amplitude = max(self.amplitude, other.amplitude)
         return beat
 
     def get_waves(self) -> typing.List[ANYWAVE]:
-        """"""
+        """Return a list of waves (ComplexWave or SimpleWave instances) that
+        represent the waves that, if played in order with no pauses in between,
+        would sound exactly like playing the Note instance, that is, the
+        components of this Note.
+        """
         return self.waves
 
     def get_duration(self) -> float:
-        """ """
+        """Return the duration of the note."""
         dur = 0
         for wave in self.waves:
             dur = dur + wave.get_duration()
@@ -166,42 +177,53 @@ class Note:
             arr = self.waves[0].play()
             for wave in self.waves[1:]:
                 arr = numpy.append(arr, wave.play())
+                #  FIXME is append the way?
             return arr * self.amplitude
 
 
-class SawtoothWave:
-    """ TODO: write a docstring for this class """
+class SawtoothWave(ComplexWave):
+    """
+
+    === Attributes ===
+    waves: list of simple waves that build this complex wave
+    """
+    waves: list
+
     def __init__(self, frequency: int,
                  duration: float, amplitude: float) -> None:
-        """ TODO: write a docstring for this method """
-        pass  # TODO: finish this method body
-
-    def __add__(self,
-                other: ANYWAVE) -> ComplexWave:
-        """ TODO: write a docstring for this method """
-        pass  # TODO: finish this method body
-
-    def complexity(self) -> int:
-        """ TODO: write a docstring for this method """
-        pass  # TODO: finish this method body
-
-    def play(self) -> numpy.ndarray:
-        """ TODO: write a docstring for this method """
-        pass  # TODO: finish this method body
-
-    def get_waves(self) -> typing.List[SimpleWave]:
-        """ TODO: write a docstring for this method """
-        pass  # TODO: finish this method body
-
-    def get_duration(self) -> float:
-        """ TODO: write a docstring for this method """
-        pass  # TODO: finish this method body
-
-    def simplify(self) -> None:
-        """ TODO: write a docstring for this method
-            REMEMBER: this is not a required part of the assignment
+        """Initialises the sawtooth wave.
         """
-        pass  # TODO: finish this method body
+        self.waves = []
+        for k in range(1, 11):
+            self.waves.append(SimpleWave(k * frequency,
+                                         amplitude / k, duration))
+            print(len(self.waves[k-1].play()))
+
+    # def __add__(self,
+    #             other: ANYWAVE) -> ComplexWave:
+    #     """ """
+
+    # def complexity(self) -> int:
+    #     """ """
+    #     return len()
+
+    # def play(self) -> numpy.ndarray:
+    #     """ TODO: write a docstring for this method """
+    #     pass  # TODO: finish this method body
+
+    # def get_waves(self) -> typing.List[SimpleWave]:
+    #     """ TODO: write a docstring for this method """
+    #     pass  # TODO: finish this method body
+
+    # def get_duration(self) -> float:
+    #     """ TODO: write a docstring for this method """
+    #     pass  # TODO: finish this method body
+
+    # def simplify(self) -> None:
+    #     """ TODO: write a docstring for this method
+    #         REMEMBER: this is not a required part of the assignment
+    #     """
+    #     pass  # TODO: finish this method body
 
 
 class SquareWave:
@@ -377,7 +399,7 @@ ANYWAVE = typing.TypeVar('ANYWAVE',
                          Rest)
 
 if __name__ == '__main__':
-    # import python_ta
+    import python_ta
     # python_ta.check_all(config={'extra-imports': ['helpers',
     #                                               'typing',
     #                                               'csv',
@@ -385,7 +407,7 @@ if __name__ == '__main__':
     #                             'disable': ['E9997']})
 
 
-    ## test step 4
+    # test step 4
     # waves = []
     # for i in range(1, 6):
     #     waves.append(SimpleWave(440 * i, 1, 1))
@@ -393,3 +415,14 @@ if __name__ == '__main__':
     # complex2 = ComplexWave(waves[2:])
     # my_note = Note([complex1, complex2])
     # play_sound(my_note)
+
+    #debug
+    sawtooth = SawtoothWave(440, 1, 1)
+    # play_sound(sawtooth)
+
+    #make sawtooth list
+    # waves = []
+    # for k in range(1, 11):
+    #     waves.append(SimpleWave(k * 440, 1 / k, 1))
+    # for wave in waves:
+    #     print(wave.freq)
