@@ -324,7 +324,8 @@ class StutterNote(Note):
         """Initialises the stutter note.
         """
         waves = []
-        for i in range(20 * duration):
+        for i in range(int(20 * duration)):
+            # FIXME int or ceil? int(floor) makes sense
             waves.append(SawtoothWave(frequency, 1/40, amplitude))
             waves.append(Rest(1 / 40))
         Note.__init__(self, waves)
