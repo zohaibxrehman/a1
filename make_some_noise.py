@@ -69,7 +69,7 @@ class SimpleWave:
         """Return a numpy array which represents a simple sine wave based on the
          frequency and duration of the simple wave.
          """
-        return make_sine_wave_array(self.freq, self.duration)
+        return make_sine_wave_array(self.freq, self.duration) * self.amp
 
 
 class ComplexWave:
