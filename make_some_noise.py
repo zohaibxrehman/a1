@@ -278,8 +278,7 @@ class Rest(ComplexWave):
 
     def __init__(self, duration: float) -> None:
         """Initialise the rest"""
-        # ComplexWave.__init__(self, [SimpleWave(0, duration, 0)])
-        self.waves = [SimpleWave(0, duration, 1)]
+        ComplexWave.__init__(self, [SimpleWave(0, duration, 0)])
     # def __add__(self,
     #             other: ANYWAVE) -> ComplexWave:
     #     """ TODO: write a docstring for this method """
@@ -308,30 +307,41 @@ class Rest(ComplexWave):
     #     pass  # TODO: finish this method body
 
 
-class StutterNote:
-    """ TODO: write a docstring for this class """
+class StutterNote(Note):
+    """
+
+    === Attributes ===
+    amplitude: amplitude of the Note
+    waves: list of simple/complex waves that build this note
+    """
     amplitude: float
+    waves: list
 
     def __init__(self, frequency: int,
                  duration: float, amplitude: float) -> None:
-        """ TODO: write a docstring for this method """
-        pass  # TODO: finish this method body
+        """Initialises the stutter note.
+        """
+        waves = []
+        for i in range(20 * duration):
+            waves.append(SawtoothWave(frequency, 1/40, amplitude))
+            waves.append(Rest(1 / 40))
+        Note.__init__(self, waves)
 
-    def __add__(self, other: Note) -> Note:
-        """ TODO: write a docstring for this method """
-        pass  # TODO: finish this method body
-
-    def get_waves(self) -> typing.List[ANYWAVE]:
-        """ TODO: write a docstring for this method """
-        pass  # TODO: finish this method body
-
-    def get_duration(self) -> float:
-        """ TODO: write a docstring for this method """
-        pass  # TODO: finish this method body
-
-    def play(self) -> numpy.ndarray:
-        """ TODO: write a docstring for this method """
-        pass  # TODO: finish this method body
+    # def __add__(self, other: Note) -> Note:
+    #     """ TODO: write a docstring for this method """
+    #     pass  # TODO: finish this method body
+    #
+    # def get_waves(self) -> typing.List[ANYWAVE]:
+    #     """ TODO: write a docstring for this method """
+    #     pass  # TODO: finish this method body
+    #
+    # def get_duration(self) -> float:
+    #     """ TODO: write a docstring for this method """
+    #     pass  # TODO: finish this method body
+    #
+    # def play(self) -> numpy.ndarray:
+    #     """ TODO: write a docstring for this method """
+    #     pass  # TODO: finish this method body
 
 class Baliset:
     """ TODO: write a docstring for this class """
@@ -436,7 +446,7 @@ if __name__ == '__main__':
     # test step 5
     # sawtooth = SawtoothWave(440, 1, 1)
     # square = SquareWave(440, 1, 1)
-    # rest = Rest(5)
+    # rest = Rest(1)
     # play_sound(sawtooth)
     # play_sound(rest)
     # play_sound(square)
@@ -447,3 +457,7 @@ if __name__ == '__main__':
     #     waves.append(SimpleWave(k * 440, 1 / k, 1))
     # for wave in waves:
     #     print(wave.freq)
+
+    #test step 6 stutternote
+    # my_note = StutterNote(440, 1, 1)
+    # play_sound(my_note)

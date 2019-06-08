@@ -2,10 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6507e6e3-b2af-41de-8cd3-8c32f568553a" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/a1.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/a1.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/make_some_noise.py" beforeDir="false" afterPath="$PROJECT_DIR$/make_some_noise.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pyta_report.html" beforeDir="false" afterPath="$PROJECT_DIR$/pyta_report.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -18,8 +15,13 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/make_some_noise.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="71">
-              <caret line="436" column="3" lean-forward="true" selection-start-line="436" selection-start-column="3" selection-end-line="441" selection-end-column="24" />
+            <state relative-caret-position="276">
+              <caret line="458" column="20" selection-start-line="458" selection-start-column="20" selection-end-line="458" selection-end-column="20" />
+              <folding>
+                <element signature="e#10289#10982#0" />
+                <element signature="e#11007#11700#0" />
+                <element signature="e#11725#12418#0" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -194,7 +196,7 @@
     <frame x="953" y="0" width="974" height="1087" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.18910256" />
+      <window_info content_ui="combo" id="Project" order="0" weight="0.18910256" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -212,17 +214,6 @@
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
     </layout>
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/make_some_noise.py</url>
-          <line>432</line>
-          <option name="timeStamp" value="3" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/pyta_report.html">
@@ -282,8 +273,13 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/make_some_noise.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="71">
-          <caret line="436" column="3" lean-forward="true" selection-start-line="436" selection-start-column="3" selection-end-line="441" selection-end-column="24" />
+        <state relative-caret-position="276">
+          <caret line="458" column="20" selection-start-line="458" selection-start-column="20" selection-end-line="458" selection-end-column="20" />
+          <folding>
+            <element signature="e#10289#10982#0" />
+            <element signature="e#11007#11700#0" />
+            <element signature="e#11725#12418#0" />
+          </folding>
         </state>
       </provider>
     </entry>
