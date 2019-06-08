@@ -101,13 +101,13 @@ class ComplexWave:
         """
         if len(self.waves) != 0:
             arr = self.waves[0].play()
-            print(len(arr))
             for wave in self.waves[1:]:
-                print(len(wave.play()))
                 arr = arr + wave.play()
-                #numpy.add?
-                print(len(arr))
-            return arr / arr.max()
+                #  numpy.add?
+            if arr.max() != 0:
+                return arr / arr.max()
+            else:
+                return arr
 
     def get_waves(self) -> typing.List[SimpleWave]:
         """Return a list of SimpleWave instances that can be added together
@@ -195,9 +195,8 @@ class SawtoothWave(ComplexWave):
         """
         self.waves = []
         for k in range(1, 11):
-            self.waves.append(SimpleWave(k * frequency,
-                                         amplitude / k, duration))
-            print(len(self.waves[k-1].play()))
+            self.waves.append(SimpleWave(k * frequency, duration,
+                                         amplitude / k))
 
     # def __add__(self,
     #             other: ANYWAVE) -> ComplexWave:
@@ -226,73 +225,87 @@ class SawtoothWave(ComplexWave):
     #     pass  # TODO: finish this method body
 
 
-class SquareWave:
-    """ TODO: write a docstring for this class """
+class SquareWave(ComplexWave):
+    """
+
+    === Attributes ===
+    waves: list of simple waves that build this complex wave
+    """
+    waves: list
+
     def __init__(self, frequency: int,
                  duration: float, amplitude: float) -> None:
-        """ TODO: write a docstring for this method """
-        pass  # TODO: finish this method body
-
-    def __add__(self,
-                other: ANYWAVE) -> ComplexWave:
-        """ TODO: write a docstring for this method """
-        pass  # TODO: finish this method body
-
-    def complexity(self) -> int:
-        """ TODO: write a docstring for this method """
-        pass  # TODO: finish this method body
-
-    def play(self) -> numpy.ndarray:
-        """ TODO: write a docstring for this method """
-        pass  # TODO: finish this method body
-
-    def get_waves(self) -> typing.List[SimpleWave]:
-        """ TODO: write a docstring for this method """
-        pass  # TODO: finish this method body
-
-    def get_duration(self) -> float:
-        """ TODO: write a docstring for this method """
-        pass  # TODO: finish this method body
-
-    def simplify(self) -> None:
-        """ TODO: write a docstring for this method
-            REMEMBER: this is not a required part of the assignment
+        """Initialises the sawtooth wave.
         """
-        pass  # TODO: finish this method body
+        self.waves = []
+        for k in range(1, 11):
+            self.waves.append(SimpleWave((2 * k - 1) * frequency, duration,
+                                         amplitude / (2 * k - 1)))
+
+    # def __add__(self,
+    #             other: ANYWAVE) -> ComplexWave:
+    #     """ TODO: write a docstring for this method """
+    #     pass  # TODO: finish this method body
+    #
+    # def complexity(self) -> int:
+    #     """ TODO: write a docstring for this method """
+    #     pass  # TODO: finish this method body
+    #
+    # def play(self) -> numpy.ndarray:
+    #     """ TODO: write a docstring for this method """
+    #     pass  # TODO: finish this method body
+    #
+    # def get_waves(self) -> typing.List[SimpleWave]:
+    #     """ TODO: write a docstring for this method """
+    #     pass  # TODO: finish this method body
+    #
+    # def get_duration(self) -> float:
+    #     """ TODO: write a docstring for this method """
+    #     pass  # TODO: finish this method body
+    #
+    # def simplify(self) -> None:
+    #     """ TODO: write a docstring for this method
+    #         REMEMBER: this is not a required part of the assignment
+    #     """
+    #     pass  # TODO: finish this method body
 
 
-class Rest:
-    """ TODO: write a docstring for this class """
+class Rest(ComplexWave):
+    """
+
+    """
+    waves: list
+
     def __init__(self, duration: float) -> None:
-        """ TODO: write a docstring for this method """
-        pass  # TODO: finish this method body
-
-    def __add__(self,
-                other: ANYWAVE) -> ComplexWave:
-        """ TODO: write a docstring for this method """
-        pass  # TODO: finish this method body
-
-    def complexity(self) -> int:
-        """ TODO: write a docstring for this method """
-        pass  # TODO: finish this method body
-
-    def play(self) -> numpy.ndarray:
-        """ TODO: write a docstring for this method """
-        pass  # TODO: finish this method body
-
-    def get_waves(self) -> typing.List[SimpleWave]:
-        """ TODO: write a docstring for this method """
-        pass  # TODO: finish this method body
-
-    def get_duration(self) -> float:
-        """ TODO: write a docstring for this method """
-        pass  # TODO: finish this method body
-
-    def simplify(self) -> None:
-        """ TODO: write a docstring for this method
-            REMEMBER: this is not a required part of the assignment
-        """
-        pass  # TODO: finish this method body
+        """Initialise the rest"""
+        # ComplexWave.__init__(self, [SimpleWave(0, duration, 0)])
+        self.waves = [SimpleWave(0, duration, 1)]
+    # def __add__(self,
+    #             other: ANYWAVE) -> ComplexWave:
+    #     """ TODO: write a docstring for this method """
+    #     pass  # TODO: finish this method body
+    #
+    # def complexity(self) -> int:
+    #     """ TODO: write a docstring for this method """
+    #     pass  # TODO: finish this method body
+    #
+    # def play(self) -> numpy.ndarray:
+    #     """ TODO: write a docstring for this method """
+    #     pass  # TODO: finish this method body
+    #
+    # def get_waves(self) -> typing.List[SimpleWave]:
+    #     """ TODO: write a docstring for this method """
+    #     pass  # TODO: finish this method body
+    #
+    # def get_duration(self) -> float:
+    #     """ TODO: write a docstring for this method """
+    #     pass  # TODO: finish this method body
+    #
+    # def simplify(self) -> None:
+    #     """ TODO: write a docstring for this method
+    #         REMEMBER: this is not a required part of the assignment
+    #     """
+    #     pass  # TODO: finish this method body
 
 
 class StutterNote:
@@ -417,8 +430,16 @@ if __name__ == '__main__':
     # play_sound(my_note)
 
     #debug
-    sawtooth = SawtoothWave(440, 1, 1)
+    # sawtooth = SawtoothWave(440, 1, 1)
     # play_sound(sawtooth)
+
+    # test step 5
+    # sawtooth = SawtoothWave(440, 1, 1)
+    # square = SquareWave(440, 1, 1)
+    # rest = Rest(5)
+    # play_sound(sawtooth)
+    # play_sound(rest)
+    # play_sound(square)
 
     #make sawtooth list
     # waves = []

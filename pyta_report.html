@@ -533,7 +533,7 @@ footer {
     <body>
         <header>
             <h1 class="title">PyTA Error Report</h1>
-            <time>Fri. Jun. 07 2019, 01:28:25 AM</time>
+            <time>Fri. Jun. 07 2019, 07:40:37 PM</time>
         </header>
         <main>
             
@@ -569,6 +569,194 @@ footer {
 
                             <div class="info">
                                 <span class="error-link style-error-id">
+                                    <a href="http://www.cs.toronto.edu/~david/pyta/&#35;E9973" target="_blank">&#10064; E9973 (type-annotation-inst-var)</a>
+                                </span>
+                                <span class="occurrences">
+                                2
+                                
+                                 occurrences.
+                                
+                                </span>
+                                <span class="shown">
+                                
+                                </span>
+                                <span class="slider">
+                                   <button> Expand/Collapse </button>
+                                </span>
+                            </div>
+
+                            <div class="message-container collapsible">
+                                
+                                <div class="message">
+                                    <h4 class="message-name">
+                                        [Line 84] Instance variable should be annotated in class body
+                                    </h4>
+                                    
+                                    <code>   <span class="grey line-num">82</span>      <span class="grey"><span class="pygments-k">def</span> <span class="pygments-fm">__init__</span><span class="pygments-p">(</span><span class="pygments-bp">self</span><span class="pygments-p">,</span> <span class="pygments-n">waves</span><span class="pygments-p">:</span> <span class="pygments-n">typing</span><span class="pygments-o">.</span><span class="pygments-n">List</span><span class="pygments-p">[</span><span class="pygments-n">SimpleWave</span><span class="pygments-p">])</span> <span class="pygments-o">-&gt;</span> <span class="pygments-bp">None</span><span class="pygments-p">:</span></span>
+   <span class="grey line-num">83</span>          <span class="grey"><span class="pygments-sd">&quot;&quot;&quot;Initialises the complex wave&quot;&quot;&quot;</span></span>
+   <span class="gbold line-num">84</span>          <span class="black"></span><span class="highlight-pyta"><span class="pygments-bp">self</span><span class="pygments-o">.</span><span class="pygments-n">waves</span></span> <span class="black"><span class="pygments-o">=</span> <span class="pygments-n">waves</span></span>
+   <span class="grey line-num">85</span>  <span class="grey"></span>
+   <span class="grey line-num">86</span>      <span class="grey"><span class="pygments-k">def</span> <span class="pygments-fm">__add__</span><span class="pygments-p">(</span><span class="pygments-bp">self</span><span class="pygments-p">,</span></span>
+</code>
+                                    
+                                </div>
+                                
+                                <div class="message">
+                                    <h4 class="message-name">
+                                        [Line 200] Instance variable should be annotated in class body
+                                    </h4>
+                                    
+                                    <code>  <span class="grey line-num">198</span>          <span class="grey"><span class="pygments-c1"># self.duration = duration</span></span>
+  <span class="grey line-num">199</span>          <span class="grey"><span class="pygments-c1"># self.amp = amplitude</span></span>
+  <span class="gbold line-num">200</span>          <span class="black"></span><span class="highlight-pyta"><span class="pygments-bp">self</span><span class="pygments-o">.</span><span class="pygments-n">wave</span></span> <span class="black"><span class="pygments-o">=</span> <span class="pygments-p">[]</span></span>
+  <span class="grey line-num">201</span>          <span class="grey"><span class="pygments-k">for</span> <span class="pygments-n">k</span> <span class="pygments-ow">in</span> <span class="pygments-nb">range</span><span class="pygments-p">(</span><span class="pygments-mi">1</span><span class="pygments-p">,</span> <span class="pygments-mi">11</span><span class="pygments-p">):</span></span>
+  <span class="grey line-num">202</span>              <span class="grey"><span class="pygments-bp">self</span><span class="pygments-o">.</span><span class="pygments-n">waves</span><span class="pygments-o">.</span><span class="pygments-n">append</span><span class="pygments-p">(</span><span class="pygments-n">SimpleWave</span><span class="pygments-p">(</span><span class="pygments-n">k</span> <span class="pygments-o">*</span> <span class="pygments-n">frequency</span><span class="pygments-p">,</span></span>
+</code>
+                                    
+                                </div>
+                                
+                            </div>
+
+                        </div>
+                        
+                        <div class="error-instance">
+
+                            <div class="info">
+                                <span class="error-link style-error-id">
+                                    <a href="http://www.cs.toronto.edu/~david/pyta/&#35;R1710" target="_blank">&#10064; R1710 (inconsistent-return-statements)</a>
+                                </span>
+                                <span class="occurrences">
+                                3
+                                
+                                 occurrences.
+                                
+                                </span>
+                                <span class="shown">
+                                
+                                </span>
+                                <span class="slider">
+                                   <button> Expand/Collapse </button>
+                                </span>
+                            </div>
+
+                            <div class="message-container collapsible">
+                                
+                                <div class="message">
+                                    <h4 class="message-name">
+                                        [Line 86] Either all return statements in a function should return an expression, or none of them should.
+                                    </h4>
+                                    
+                                    <code>   <span class="grey line-num">84</span>          <span class="grey"><span class="pygments-bp">self</span><span class="pygments-o">.</span><span class="pygments-n">waves</span> <span class="pygments-o">=</span> <span class="pygments-n">waves</span></span>
+   <span class="grey line-num">85</span>  <span class="grey"></span>
+   <span class="gbold line-num">86</span>      <span class="black"></span><span class="highlight-pyta"><span class="pygments-k">def</span> <span class="pygments-fm">__add__</span><span class="pygments-p">(</span><span class="pygments-bp">self</span><span class="pygments-p">,</span></span>
+   <span class="gbold line-num">87</span>                  <span class="highlight-pyta"><span class="pygments-n">other</span><span class="pygments-p">:</span> <span class="pygments-n">ANYWAVE</span><span class="pygments-p">)</span> <span class="pygments-o">-&gt;</span> <span class="pygments-n">ComplexWave</span><span class="pygments-p">:</span></span>
+   <span class="gbold line-num">88</span>          <span class="highlight-pyta"><span class="pygments-sd">&quot;&quot;&quot;Return the sum of a complex wave and another wave.&quot;&quot;&quot;</span></span>
+   <span class="gbold line-num">89</span>          <span class="highlight-pyta"><span class="pygments-k">if</span> <span class="pygments-nb">isinstance</span><span class="pygments-p">(</span><span class="pygments-n">other</span><span class="pygments-p">,</span> <span class="pygments-n">SimpleWave</span><span class="pygments-p">):</span></span>
+   <span class="gbold line-num">90</span>              <span class="highlight-pyta"><span class="pygments-k">return</span> <span class="pygments-n">ComplexWave</span><span class="pygments-p">(</span><span class="pygments-bp">self</span><span class="pygments-o">.</span><span class="pygments-n">waves</span> <span class="pygments-o">+</span> <span class="pygments-p">[</span><span class="pygments-n">other</span><span class="pygments-p">])</span></span>
+   <span class="gbold line-num">91</span>          <span class="highlight-pyta"><span class="pygments-k">elif</span> <span class="pygments-nb">isinstance</span><span class="pygments-p">(</span><span class="pygments-n">other</span><span class="pygments-p">,</span> <span class="pygments-n">ComplexWave</span><span class="pygments-p">):</span></span>
+   <span class="gbold line-num">92</span>              <span class="highlight-pyta"><span class="pygments-k">return</span> <span class="pygments-n">ComplexWave</span><span class="pygments-p">(</span><span class="pygments-bp">self</span><span class="pygments-o">.</span><span class="pygments-n">waves</span> <span class="pygments-o">+</span> <span class="pygments-n">other</span><span class="pygments-o">.</span><span class="pygments-n">waves</span><span class="pygments-p">)</span></span>
+   <span class="grey line-num">93</span>  <span class="grey"></span>
+   <span class="grey line-num">94</span>      <span class="grey"><span class="pygments-k">def</span> <span class="pygments-nf">complexity</span><span class="pygments-p">(</span><span class="pygments-bp">self</span><span class="pygments-p">)</span> <span class="pygments-o">-&gt;</span> <span class="pygments-nb">int</span><span class="pygments-p">:</span></span>
+</code>
+                                    
+                                </div>
+                                
+                                <div class="message">
+                                    <h4 class="message-name">
+                                        [Line 98] Either all return statements in a function should return an expression, or none of them should.
+                                    </h4>
+                                    
+                                    <code>   <span class="grey line-num">96</span>          <span class="grey"><span class="pygments-k">return</span> <span class="pygments-nb">len</span><span class="pygments-p">(</span><span class="pygments-bp">self</span><span class="pygments-o">.</span><span class="pygments-n">waves</span><span class="pygments-p">)</span></span>
+   <span class="grey line-num">97</span>  <span class="grey"></span>
+   <span class="gbold line-num">98</span>      <span class="black"></span><span class="highlight-pyta"><span class="pygments-k">def</span> <span class="pygments-nf">play</span><span class="pygments-p">(</span><span class="pygments-bp">self</span><span class="pygments-p">)</span> <span class="pygments-o">-&gt;</span> <span class="pygments-n">numpy</span><span class="pygments-o">.</span><span class="pygments-n">ndarray</span><span class="pygments-p">:</span></span>
+   <span class="gbold line-num">99</span>          <span class="highlight-pyta"><span class="pygments-s2">&quot;&quot;&quot;Return a numpy array which represents a wave based on the additive</span></span>
+  <span class="gbold line-num">100</span>          <span class="highlight-pyta"><span class="pygments-n">synthesis</span> <span class="pygments-n">of</span> <span class="pygments-n">its</span> <span class="pygments-n">simple</span> <span class="pygments-n">waves</span><span class="pygments-o">.</span></span>
+  <span class="gbold line-num">101</span>          <span class="highlight-pyta"><span class="pygments-s2">&quot;&quot;&quot;</span></span>
+  <span class="gbold line-num">102</span>          <span class="highlight-pyta"><span class="pygments-k">if</span> <span class="pygments-nb">len</span><span class="pygments-p">(</span><span class="pygments-bp">self</span><span class="pygments-o">.</span><span class="pygments-n">waves</span><span class="pygments-p">)</span> <span class="pygments-o">!=</span> <span class="pygments-mi">0</span><span class="pygments-p">:</span></span>
+  <span class="gbold line-num">103</span>              <span class="highlight-pyta"><span class="pygments-n">arr</span> <span class="pygments-o">=</span> <span class="pygments-bp">self</span><span class="pygments-o">.</span><span class="pygments-n">waves</span><span class="pygments-p">[</span><span class="pygments-mi">0</span><span class="pygments-p">]</span><span class="pygments-o">.</span><span class="pygments-n">play</span><span class="pygments-p">()</span></span>
+  <span class="gbold line-num">104</span>              <span class="highlight-pyta"><span class="pygments-k">for</span> <span class="pygments-n">wave</span> <span class="pygments-ow">in</span> <span class="pygments-bp">self</span><span class="pygments-o">.</span><span class="pygments-n">waves</span><span class="pygments-p">[</span><span class="pygments-mi">1</span><span class="pygments-p">:]:</span></span>
+  <span class="gbold line-num">105</span>                  <span class="highlight-pyta"><span class="pygments-n">arr</span> <span class="pygments-o">=</span> <span class="pygments-n">arr</span> <span class="pygments-o">+</span> <span class="pygments-n">wave</span><span class="pygments-o">.</span><span class="pygments-n">play</span><span class="pygments-p">()</span></span>
+  <span class="gbold line-num">106</span>              <span class="highlight-pyta"><span class="pygments-k">return</span> <span class="pygments-n">arr</span> <span class="pygments-o">/</span> <span class="pygments-n">arr</span><span class="pygments-o">.</span><span class="pygments-n">max</span><span class="pygments-p">()</span></span>
+  <span class="grey line-num">107</span>  <span class="grey"></span>
+  <span class="grey line-num">108</span>      <span class="grey"><span class="pygments-k">def</span> <span class="pygments-nf">get_waves</span><span class="pygments-p">(</span><span class="pygments-bp">self</span><span class="pygments-p">)</span> <span class="pygments-o">-&gt;</span> <span class="pygments-n">typing</span><span class="pygments-o">.</span><span class="pygments-n">List</span><span class="pygments-p">[</span><span class="pygments-n">SimpleWave</span><span class="pygments-p">]:</span></span>
+</code>
+                                    
+                                </div>
+                                
+                                <div class="message">
+                                    <h4 class="message-name">
+                                        [Line 170] Either all return statements in a function should return an expression, or none of them should.
+                                    </h4>
+                                    
+                                    <code>  <span class="grey line-num">168</span>          <span class="grey"><span class="pygments-k">return</span> <span class="pygments-n">dur</span></span>
+  <span class="grey line-num">169</span>  <span class="grey"></span>
+  <span class="gbold line-num">170</span>      <span class="black"></span><span class="highlight-pyta"><span class="pygments-k">def</span> <span class="pygments-nf">play</span><span class="pygments-p">(</span><span class="pygments-bp">self</span><span class="pygments-p">)</span> <span class="pygments-o">-&gt;</span> <span class="pygments-n">numpy</span><span class="pygments-o">.</span><span class="pygments-n">ndarray</span><span class="pygments-p">:</span></span>
+  <span class="gbold line-num">171</span>          <span class="highlight-pyta"><span class="pygments-sd">&quot;&quot;&quot; &quot;&quot;&quot;</span></span>
+  <span class="gbold line-num">172</span>          <span class="highlight-pyta"><span class="pygments-k">if</span> <span class="pygments-nb">len</span><span class="pygments-p">(</span><span class="pygments-bp">self</span><span class="pygments-o">.</span><span class="pygments-n">waves</span><span class="pygments-p">)</span> <span class="pygments-o">!=</span> <span class="pygments-mi">0</span><span class="pygments-p">:</span></span>
+  <span class="gbold line-num">173</span>              <span class="highlight-pyta"><span class="pygments-n">arr</span> <span class="pygments-o">=</span> <span class="pygments-bp">self</span><span class="pygments-o">.</span><span class="pygments-n">waves</span><span class="pygments-p">[</span><span class="pygments-mi">0</span><span class="pygments-p">]</span><span class="pygments-o">.</span><span class="pygments-n">play</span><span class="pygments-p">()</span></span>
+  <span class="gbold line-num">174</span>              <span class="highlight-pyta"><span class="pygments-k">for</span> <span class="pygments-n">wave</span> <span class="pygments-ow">in</span> <span class="pygments-bp">self</span><span class="pygments-o">.</span><span class="pygments-n">waves</span><span class="pygments-p">[</span><span class="pygments-mi">1</span><span class="pygments-p">:]:</span></span>
+  <span class="gbold line-num">175</span>                  <span class="highlight-pyta"><span class="pygments-n">arr</span> <span class="pygments-o">=</span> <span class="pygments-n">numpy</span><span class="pygments-o">.</span><span class="pygments-n">append</span><span class="pygments-p">(</span><span class="pygments-n">arr</span><span class="pygments-p">,</span> <span class="pygments-n">wave</span><span class="pygments-o">.</span><span class="pygments-n">play</span><span class="pygments-p">())</span></span>
+  <span class="gbold line-num">176</span>              <span class="highlight-pyta"><span class="pygments-k">return</span> <span class="pygments-n">arr</span> <span class="pygments-o">*</span> <span class="pygments-bp">self</span><span class="pygments-o">.</span><span class="pygments-n">amplitude</span></span>
+  <span class="grey line-num">177</span>  <span class="grey"></span>
+  <span class="grey line-num">178</span>  <span class="grey"></span>
+</code>
+                                    
+                                </div>
+                                
+                            </div>
+
+                        </div>
+                        
+                        <div class="error-instance">
+
+                            <div class="info">
+                                <span class="error-link style-error-id">
+                                    <a href="http://www.cs.toronto.edu/~david/pyta/&#35;C0112" target="_blank">&#10064; C0112 (empty-docstring)</a>
+                                </span>
+                                <span class="occurrences">
+                                1
+                                
+                                 occurrence.
+                                
+                                </span>
+                                <span class="shown">
+                                
+                                </span>
+                                <span class="slider">
+                                   <button> Expand/Collapse </button>
+                                </span>
+                            </div>
+
+                            <div class="message-container collapsible">
+                                
+                                <div class="message">
+                                    <h4 class="message-name">
+                                        [Line 170] Empty method docstring
+                                    </h4>
+                                    
+                                    <code>  <span class="grey line-num">168</span>          <span class="grey"><span class="pygments-k">return</span> <span class="pygments-n">dur</span></span>
+  <span class="grey line-num">169</span>  <span class="grey"></span>
+  <span class="gbold line-num">170</span>      <span class="black"></span><span class="highlight-pyta"><span class="pygments-k">def</span> <span class="pygments-nf">play</span><span class="pygments-p">(</span><span class="pygments-bp">self</span><span class="pygments-p">)</span> <span class="pygments-o">-&gt;</span> <span class="pygments-n">numpy</span><span class="pygments-o">.</span><span class="pygments-n">ndarray</span><span class="pygments-p">:</span></span>
+  <span class="gbold line-num">171</span>          <span class="highlight-pyta"><span class="pygments-sd">&quot;&quot;&quot; &quot;&quot;&quot;</span></span>
+  <span class="gbold line-num">172</span>          <span class="highlight-pyta"><span class="pygments-k">if</span> <span class="pygments-nb">len</span><span class="pygments-p">(</span><span class="pygments-bp">self</span><span class="pygments-o">.</span><span class="pygments-n">waves</span><span class="pygments-p">)</span> <span class="pygments-o">!=</span> <span class="pygments-mi">0</span><span class="pygments-p">:</span></span>
+  <span class="gbold line-num">173</span>              <span class="highlight-pyta"><span class="pygments-n">arr</span> <span class="pygments-o">=</span> <span class="pygments-bp">self</span><span class="pygments-o">.</span><span class="pygments-n">waves</span><span class="pygments-p">[</span><span class="pygments-mi">0</span><span class="pygments-p">]</span><span class="pygments-o">.</span><span class="pygments-n">play</span><span class="pygments-p">()</span></span>
+  <span class="gbold line-num">174</span>              <span class="highlight-pyta"><span class="pygments-k">for</span> <span class="pygments-n">wave</span> <span class="pygments-ow">in</span> <span class="pygments-bp">self</span><span class="pygments-o">.</span><span class="pygments-n">waves</span><span class="pygments-p">[</span><span class="pygments-mi">1</span><span class="pygments-p">:]:</span></span>
+  <span class="gbold line-num">175</span>                  <span class="highlight-pyta"><span class="pygments-n">arr</span> <span class="pygments-o">=</span> <span class="pygments-n">numpy</span><span class="pygments-o">.</span><span class="pygments-n">append</span><span class="pygments-p">(</span><span class="pygments-n">arr</span><span class="pygments-p">,</span> <span class="pygments-n">wave</span><span class="pygments-o">.</span><span class="pygments-n">play</span><span class="pygments-p">())</span></span>
+  <span class="gbold line-num">176</span>              <span class="highlight-pyta"><span class="pygments-k">return</span> <span class="pygments-n">arr</span> <span class="pygments-o">*</span> <span class="pygments-bp">self</span><span class="pygments-o">.</span><span class="pygments-n">amplitude</span></span>
+  <span class="grey line-num">177</span>  <span class="grey"></span>
+  <span class="grey line-num">178</span>  <span class="grey"></span>
+</code>
+                                    
+                                </div>
+                                
+                            </div>
+
+                        </div>
+                        
+                        <div class="error-instance">
+
+                            <div class="info">
+                                <span class="error-link style-error-id">
                                     <a href="http://www.cs.toronto.edu/~david/pyta/&#35;W0613" target="_blank">&#10064; W0613 (unused-argument)</a>
                                 </span>
                                 <span class="occurrences">
@@ -589,28 +777,28 @@ footer {
                                 
                                 <div class="message">
                                     <h4 class="message-name">
-                                        [Line 325] Unused argument 'song_file'
+                                        [Line 389] Unused argument 'song_file'
                                     </h4>
                                     
-                                    <code>  <span class="grey line-num">323</span>  <span class="grey"></span>
-  <span class="grey line-num">324</span>  <span class="grey"></span>
-  <span class="gbold line-num">325</span>  <span class="black"><span class="pygments-k">def</span> <span class="pygments-nf">play_song</span><span class="pygments-p">(</span></span><span class="highlight-pyta"><span class="pygments-n">song_file</span></span><span class="black"><span class="pygments-p">:</span> <span class="pygments-nb">str</span><span class="pygments-p">,</span> <span class="pygments-n">beat</span><span class="pygments-p">:</span> <span class="pygments-nb">float</span><span class="pygments-p">)</span> <span class="pygments-o">-&gt;</span> <span class="pygments-bp">None</span><span class="pygments-p">:</span></span>
-  <span class="grey line-num">326</span>      <span class="grey"><span class="pygments-sd">&quot;&quot;&quot; TODO: write a docstring for this function &quot;&quot;&quot;</span></span>
-  <span class="grey line-num">327</span>      <span class="grey"><span class="pygments-k">pass</span>  <span class="pygments-c1"># TODO: finish this function body</span></span>
+                                    <code>  <span class="grey line-num">387</span>  <span class="grey"></span>
+  <span class="grey line-num">388</span>  <span class="grey"></span>
+  <span class="gbold line-num">389</span>  <span class="black"><span class="pygments-k">def</span> <span class="pygments-nf">play_song</span><span class="pygments-p">(</span></span><span class="highlight-pyta"><span class="pygments-n">song_file</span></span><span class="black"><span class="pygments-p">:</span> <span class="pygments-nb">str</span><span class="pygments-p">,</span> <span class="pygments-n">beat</span><span class="pygments-p">:</span> <span class="pygments-nb">float</span><span class="pygments-p">)</span> <span class="pygments-o">-&gt;</span> <span class="pygments-bp">None</span><span class="pygments-p">:</span></span>
+  <span class="grey line-num">390</span>      <span class="grey"><span class="pygments-sd">&quot;&quot;&quot; TODO: write a docstring for this function &quot;&quot;&quot;</span></span>
+  <span class="grey line-num">391</span>      <span class="grey"><span class="pygments-k">pass</span>  <span class="pygments-c1"># TODO: finish this function body</span></span>
 </code>
                                     
                                 </div>
                                 
                                 <div class="message">
                                     <h4 class="message-name">
-                                        [Line 325] Unused argument 'beat'
+                                        [Line 389] Unused argument 'beat'
                                     </h4>
                                     
-                                    <code>  <span class="grey line-num">323</span>  <span class="grey"></span>
-  <span class="grey line-num">324</span>  <span class="grey"></span>
-  <span class="gbold line-num">325</span>  <span class="black"><span class="pygments-k">def</span> <span class="pygments-nf">play_song</span><span class="pygments-p">(</span><span class="pygments-n">song_file</span><span class="pygments-p">:</span> <span class="pygments-nb">str</span><span class="pygments-p">,</span> </span><span class="highlight-pyta"><span class="pygments-n">beat</span></span><span class="black"><span class="pygments-p">:</span> <span class="pygments-nb">float</span><span class="pygments-p">)</span> <span class="pygments-o">-&gt;</span> <span class="pygments-bp">None</span><span class="pygments-p">:</span></span>
-  <span class="grey line-num">326</span>      <span class="grey"><span class="pygments-sd">&quot;&quot;&quot; TODO: write a docstring for this function &quot;&quot;&quot;</span></span>
-  <span class="grey line-num">327</span>      <span class="grey"><span class="pygments-k">pass</span>  <span class="pygments-c1"># TODO: finish this function body</span></span>
+                                    <code>  <span class="grey line-num">387</span>  <span class="grey"></span>
+  <span class="grey line-num">388</span>  <span class="grey"></span>
+  <span class="gbold line-num">389</span>  <span class="black"><span class="pygments-k">def</span> <span class="pygments-nf">play_song</span><span class="pygments-p">(</span><span class="pygments-n">song_file</span><span class="pygments-p">:</span> <span class="pygments-nb">str</span><span class="pygments-p">,</span> </span><span class="highlight-pyta"><span class="pygments-n">beat</span></span><span class="black"><span class="pygments-p">:</span> <span class="pygments-nb">float</span><span class="pygments-p">)</span> <span class="pygments-o">-&gt;</span> <span class="pygments-bp">None</span><span class="pygments-p">:</span></span>
+  <span class="grey line-num">390</span>      <span class="grey"><span class="pygments-sd">&quot;&quot;&quot; TODO: write a docstring for this function &quot;&quot;&quot;</span></span>
+  <span class="grey line-num">391</span>      <span class="grey"><span class="pygments-k">pass</span>  <span class="pygments-c1"># TODO: finish this function body</span></span>
 </code>
                                     
                                 </div>
