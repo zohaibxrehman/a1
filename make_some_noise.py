@@ -104,8 +104,10 @@ class ComplexWave:
             for wave in self.waves[1:]:
                 arr = arr + wave.play()
                 #  numpy.add?
-            if arr.max() != 0:
-                return arr / arr.max()
+            abs_max = abs(arr.max()) if abs(arr.max()) > abs(arr.min()) \
+                else abs(arr.min())
+            if abs_max != 0:
+                return arr / abs_max
             else:
                 return arr
 
