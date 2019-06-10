@@ -195,10 +195,11 @@ class SawtoothWave(ComplexWave):
                  duration: float, amplitude: float) -> None:
         """Initialises the sawtooth wave.
         """
-        self.waves = []
+        waves = []
         for k in range(1, 11):
-            self.waves.append(SimpleWave(k * frequency, duration,
+            waves.append(SimpleWave(k * frequency, duration,
                                          amplitude / k))
+        ComplexWave.__init__(self, waves)
 
     # def __add__(self,
     #             other: ANYWAVE) -> ComplexWave:
@@ -239,10 +240,11 @@ class SquareWave(ComplexWave):
                  duration: float, amplitude: float) -> None:
         """Initialises the square wave.
         """
-        self.waves = []
+        waves = []
         for k in range(1, 11):
-            self.waves.append(SimpleWave((2 * k - 1) * frequency, duration,
-                                         amplitude / (2 * k - 1)))
+            waves.append(SimpleWave((2 * k - 1) * frequency, duration,
+                                    amplitude / (2 * k - 1)))
+        ComplexWave.__init__(self, waves)
 
     # def __add__(self,
     #             other: ANYWAVE) -> ComplexWave:
