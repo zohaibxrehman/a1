@@ -30,7 +30,7 @@ class SimpleWave:
     duration: duration of the simple wave
     amp: amplitude of the simple wave
     """
-    freq: int #FIXME WHAT IS TYPE? INT OR FLOAT
+    freq: int # FIXME WHAT IS TYPE? INT OR FLOAT
     duration: float
     amp: float
 
@@ -41,7 +41,7 @@ class SimpleWave:
         self.freq = frequency
         self.duration = duration
         self.amp = amplitude
-        #FIXME WHAT IS DURATION FOR?
+        # FIXME WHAT IS DURATION FOR?
 
     def __eq__(self, other: SimpleWave) -> bool:
         """Return true if this simple wave and other simple wave are equal.
@@ -59,7 +59,7 @@ class SimpleWave:
                 other: ANYWAVE) -> ComplexWave:
         """add"""
         return ComplexWave([self, other])
-        #FIXME sum of two simple waves.
+        # FIXME sum of two simple waves.
 
     def get_duration(self) -> float:
         """Return duration of a SimpleWave instance in seconds."""
@@ -174,7 +174,7 @@ class Note:
         return dur
 
     def play(self) -> numpy.ndarray:
-        """ """
+        """Return a numpy array which represents the note."""
         if len(self.waves) != 0:
             arr = self.waves[0].play()
             for wave in self.waves[1:]:
@@ -209,22 +209,22 @@ class SawtoothWave(ComplexWave):
     #     return len()
 
     # def play(self) -> numpy.ndarray:
-    #     """ TODO: write a docstring for this method """
-    #     pass  # TODO: finish this method body
+    #     """ """
+    #     pass
 
     # def get_waves(self) -> typing.List[SimpleWave]:
-    #     """ TODO: write a docstring for this method """
-    #     pass  # TODO: finish this method body
+    #     """  """
+    #     pass
 
     # def get_duration(self) -> float:
-    #     """ TODO: write a docstring for this method """
-    #     pass  # TODO: finish this method body
+    #     """ """
+    #     pass
 
     # def simplify(self) -> None:
-    #     """ TODO: write a docstring for this method
+    #     """
     #         REMEMBER: this is not a required part of the assignment
     #     """
-    #     pass  # TODO: finish this method body
+    #     pass
 
 
 class SquareWave(ComplexWave):
@@ -237,7 +237,7 @@ class SquareWave(ComplexWave):
 
     def __init__(self, frequency: int,
                  duration: float, amplitude: float) -> None:
-        """Initialises the sawtooth wave.
+        """Initialises the square wave.
         """
         self.waves = []
         for k in range(1, 11):
@@ -246,30 +246,30 @@ class SquareWave(ComplexWave):
 
     # def __add__(self,
     #             other: ANYWAVE) -> ComplexWave:
-    #     """ TODO: write a docstring for this method """
-    #     pass  # TODO: finish this method body
+    #     """ """
+    #     pass
     #
     # def complexity(self) -> int:
-    #     """ TODO: write a docstring for this method """
-    #     pass  # TODO: finish this method body
+    #     """ """
+    #     pass
     #
     # def play(self) -> numpy.ndarray:
-    #     """ TODO: write a docstring for this method """
-    #     pass  # TODO: finish this method body
+    #     """ """
+    #     pass
     #
     # def get_waves(self) -> typing.List[SimpleWave]:
-    #     """ TODO: write a docstring for this method """
-    #     pass  # TODO: finish this method body
+    #     """ """
+    #     pass
     #
     # def get_duration(self) -> float:
-    #     """ TODO: write a docstring for this method """
-    #     pass  # TODO: finish this method body
+    #     """ """
+    #     pass
     #
     # def simplify(self) -> None:
-    #     """ TODO: write a docstring for this method
+    #     """
     #         REMEMBER: this is not a required part of the assignment
     #     """
-    #     pass  # TODO: finish this method body
+    #     pass
 
 
 class Rest(ComplexWave):
@@ -281,32 +281,33 @@ class Rest(ComplexWave):
     def __init__(self, duration: float) -> None:
         """Initialise the rest"""
         ComplexWave.__init__(self, [SimpleWave(0, duration, 0)])
+
     # def __add__(self,
     #             other: ANYWAVE) -> ComplexWave:
-    #     """ TODO: write a docstring for this method """
-    #     pass  # TODO: finish this method body
+    #     """ """
+    #     pass
     #
     # def complexity(self) -> int:
-    #     """ TODO: write a docstring for this method """
-    #     pass  # TODO: finish this method body
+    #     """ """
+    #     pass
     #
     # def play(self) -> numpy.ndarray:
-    #     """ TODO: write a docstring for this method """
-    #     pass  # TODO: finish this method body
+    #     """ """
+    #     pass
     #
     # def get_waves(self) -> typing.List[SimpleWave]:
-    #     """ TODO: write a docstring for this method """
-    #     pass  # TODO: finish this method body
+    #     """ """
+    #     pass  #
     #
     # def get_duration(self) -> float:
-    #     """ TODO: write a docstring for this method """
-    #     pass  # TODO: finish this method body
+    #     """ """
+    #     pass
     #
     # def simplify(self) -> None:
-    #     """ TODO: write a docstring for this method
+    #     """
     #         REMEMBER: this is not a required part of the assignment
     #     """
-    #     pass  # TODO: finish this method body
+    #     pass
 
 
 class StutterNote(Note):
@@ -331,82 +332,165 @@ class StutterNote(Note):
         Note.__init__(self, waves)
 
     # def __add__(self, other: Note) -> Note:
-    #     """ TODO: write a docstring for this method """
-    #     pass  # TODO: finish this method body
+    #     """ """
+    #     pass  #
     #
     # def get_waves(self) -> typing.List[ANYWAVE]:
-    #     """ TODO: write a docstring for this method """
-    #     pass  # TODO: finish this method body
+    #     """ """
+    #     pass  #
     #
     # def get_duration(self) -> float:
-    #     """ TODO: write a docstring for this method """
-    #     pass  # TODO: finish this method body
+    #     """ """
+    #     pass  #
     #
     # def play(self) -> numpy.ndarray:
-    #     """ TODO: write a docstring for this method """
-    #     pass  # TODO: finish this method body
+    #     """ ""
+    #     pass  #
 
-class Baliset:
-    """ TODO: write a docstring for this class """
+
+class Instrument:
+    """
+    Superclass for the instruments.
+
+    === Attributes ===
+    note: the currently stored note
+    """
+    note: Note
+
     def __init__(self) -> None:
-        """ TODO: write a docstring for this method """
-        pass  # TODO: finish this method body
+        """Initialises the baliset
+        """
+        self.note = Note([]) # FIXME init doesn't seem perfect
 
     def get_duration(self) -> float:
-        """ TODO: write a docstring for this method """
-        pass  # TODO: finish this method body
+        """Return the duration of the baliset.
+        """
+        return self.note.get_duration()
 
     def next_notes(self,
                    note_info: typing.List[typing.Tuple[str, float, float]]
                    ) -> None:
-        """ TODO: write a docstring for this method """
-        pass  # TODO: finish this method body
+        """Calculate the  next series of Notes, SimpleWaves and/or ComplexWaves
+        to play based on the arguments (see docstring) and store it somewhere
+        as a Note object
+        """
+        raise NotImplementedError
 
     def play(self) -> numpy.ndarray:
-        """ TODO: write a docstring for this method """
-        pass  # TODO: finish this method body
+        """Return a numpy array which represents the baliset.
+        """
+        return self.note.play()
 
 
-class Holophonor:
-    """ TODO: write a docstring for this class """
+class Baliset(Instrument):
+    """
+    === Attributes ===
+    note: the currently stored note
+    """
+    note: Note
+
     def __init__(self) -> None:
-        """ TODO: write a docstring for this method """
-        pass  # TODO: finish this method body
+        """Initialises the baliset.
+        """
+        Instrument.__init__(self)
 
-    def get_duration(self) -> float:
-        """ TODO: write a docstring for this method """
-        pass  # TODO: finish this method body
+    # def get_duration(self) -> float:
+    #     """Return the duration of the baliset.
+    #     """
+    #     return self.note.get_duration()
 
     def next_notes(self,
                    note_info: typing.List[typing.Tuple[str, float, float]]
                    ) -> None:
-        """ TODO: write a docstring for this method """
-        pass  # TODO: finish this method body
+        """Calculate the  next series of Notes, SimpleWaves and/or ComplexWaves
+        to play based on the arguments (see docstring) and store it somewhere
+        as a Note object
+        """
+        waves = []
+        for info in note_info:
+            ratio_lst = info[0].strip().split(':')
+            ratio = float(ratio_lst[0]) / float(ratio_lst[1])
+            # FIXME optimize? int?
+            waves.append(SawtoothWave(196 * ratio, info[2], info[1]))
+            # FIXME BIGTIME: FLOAT VALUE FOR FREQ?
+            # FIXME !!!
+            # FIXME !!!
+        self.note = Note(waves)
 
-    def play(self) -> numpy.ndarray:
-        """ TODO: write a docstring for this method """
-        pass  # TODO: finish this method body
+    # def play(self) -> numpy.ndarray:
+    #     """Return a numpy array which represents the baliset.
+    #     """
+    #     return self.note.play()
 
 
-class Gaffophone:
-    """ TODO: write a docstring for this class """
+class Holophonor(Instrument):
+    """
+    === Attributes ===
+    note: the currently stored note
+    """
+    note: Note
+
     def __init__(self) -> None:
-        """ TODO: write a docstring for this method """
-        pass  # TODO: finish this method body
+        """Initialises the holophonor.
+        """
+        Instrument.__init__(self) # comeback and FIXME. stutternote
 
-    def get_duration(self) -> float:
-        """ TODO: write a docstring for this method """
-        pass  # TODO: finish this method body
+    # def get_duration(self) -> float:
+    #     """  """
+    #     pass  #
 
     def next_notes(self,
                    note_info: typing.List[typing.Tuple[str, float, float]]
                    ) -> None:
-        """ TODO: write a docstring for this method """
-        pass  # TODO: finish this method body
+        """Calculate the  next series of Notes, SimpleWaves and/or ComplexWaves
+        to play based on the arguments (see docstring) and store it somewhere
+        as a Note object.
+        """
+        if len(note_info) != 0:
+            ratio_lst = note_info[0][0].strip().split(':')
+            ratio = float(ratio_lst[0]) / float(ratio_lst[1])
+            waves = StutterNote(ratio * 65, note_info[0][2], note_info[0][1])
+            for info in note_info[1:]:
+                ratio_lst = info[0].strip().split(':')
+                ratio = float(ratio_lst[0]) / float(ratio_lst[1])
+                wave = StutterNote(ratio * 65, info[2], info[1])
+                # FIXME optimize? int?
+                waves = waves + wave
+                # FIXME BIGTIME: FLOAT VALUE FOR FREQ?
+            self.note = waves
 
-    def play(self) -> numpy.ndarray:
-        """ TODO: write a docstring for this method """
-        pass  # TODO: finish this method body
+    # def play(self) -> numpy.ndarray:
+    #     """  """
+    #     pass
+
+class Gaffophone(Instrument):
+    """
+    === Attributes ===
+    note: the currently stored note
+    """
+    note: Note
+
+    def __init__(self) -> None:
+        """Initialises the gaffophone.
+        """
+        Instrument.__init__(self)
+
+    # def get_duration(self) -> float:
+    #     """ """
+    #     pass
+
+    def next_notes(self,
+                   note_info: typing.List[typing.Tuple[str, float, float]]
+                   ) -> None:
+        """Calculate the  next series of Notes, SimpleWaves and/or ComplexWaves
+        to play based on the arguments (see docstring) and store it somewhere
+        as a Note object.
+        """
+
+
+    # def play(self) -> numpy.ndarray:
+    #     """ """
+    #     pass
 
 
 def play_song(song_file: str, beat: float) -> None:
@@ -432,7 +516,6 @@ if __name__ == '__main__':
     #                                               'numpy'],
     #                             'disable': ['E9997']})
 
-
     # test step 4
     # waves = []
     # for i in range(1, 6):
@@ -442,7 +525,7 @@ if __name__ == '__main__':
     # my_note = Note([complex1, complex2])
     # play_sound(my_note)
 
-    #debug
+    # debug
     # sawtooth = SawtoothWave(440, 1, 1)
     # play_sound(sawtooth)
 
@@ -454,13 +537,36 @@ if __name__ == '__main__':
     # play_sound(rest)
     # play_sound(square)
 
-    #make sawtooth list
+    # make sawtooth list
     # waves = []
     # for k in range(1, 11):
     #     waves.append(SimpleWave(k * 440, 1 / k, 1))
     # for wave in waves:
     #     print(wave.freq)
 
-    #test step 6 stutternote
+    # test step 6 stutternote
     # my_note = StutterNote(440, 1, 1)
     # play_sound(my_note)
+
+    # test step 7
+    # bal = Baliset()
+    # bal.next_notes([("5:4", 0.7, 1)])
+    # play_sound(bal)
+
+    # test 2 step 7
+    # bal = Baliset()
+    # bal.next_notes([("5:4", 0.7, 1), ("6:4", 0.7, 1), ("7:4", 0.7, 1)])
+    #
+    # hol = Holophonor()
+    # hol.next_notes([("5:4", 0.7, 1), ("6:4", 0.7, 1)])
+    #
+    # bal2 = Baliset()
+    # bal2.next_notes([("5:6", 0.7, 1), ("6:7", 0.7, 1), ("7:8", 0.7, 1),
+    #                  ("7:9", 0.7, 1)])
+    #
+    # for i in range(2):
+    #     play_sound(bal)
+    #     play_sound(hol)
+    #     play_sound(bal2)
+
+
