@@ -413,7 +413,7 @@ class Baliset(Instrument):
             ratio_lst = info[0].strip().split(':')
             ratio = float(ratio_lst[0]) / float(ratio_lst[1])
             # FIXME optimize? int?
-            waves.append(SawtoothWave(196 * ratio, info[2], info[1]))
+            waves.append(SawtoothWave(int(196 * ratio), info[2], info[1]))
             # FIXME BIGTIME: FLOAT VALUE FOR FREQ?
             # FIXME !!!
             # FIXME !!!
@@ -451,11 +451,11 @@ class Holophonor(Instrument):
         if len(note_info) != 0:
             ratio_lst = note_info[0][0].strip().split(':')
             ratio = float(ratio_lst[0]) / float(ratio_lst[1])
-            waves = StutterNote(ratio * 65, note_info[0][2], note_info[0][1])
+            waves = StutterNote(int(ratio * 65), note_info[0][2], note_info[0][1])
             for info in note_info[1:]:
                 ratio_lst = info[0].strip().split(':')
                 ratio = float(ratio_lst[0]) / float(ratio_lst[1])
-                wave = StutterNote(ratio * 65, info[2], info[1])
+                wave = StutterNote(int(ratio * 65), info[2], info[1])
                 # FIXME optimize? int?
                 waves = waves + wave
                 # FIXME BIGTIME: FLOAT VALUE FOR FREQ?
@@ -464,6 +464,7 @@ class Holophonor(Instrument):
     # def play(self) -> numpy.ndarray:
     #     """  """
     #     pass
+
 
 class Gaffophone(Instrument):
     """
@@ -488,8 +489,17 @@ class Gaffophone(Instrument):
         to play based on the arguments (see docstring) and store it somewhere
         as a Note object.
         """
-
-
+        waves = []
+        for info in note_info:
+            ratio_lst = info[0].strip().split(':')
+            ratio = float(ratio_lst[0]) / float(ratio_lst[1])
+            # FIXME optimize? int?
+            waves.append(SquareWave(int(131 * ratio), info[2], info[1]) +
+                         SquareWave(int(131 * 3/2 * ratio), info[2], info[1]))
+            # FIXME BIGTIME: FLOAT VALUE FOR FREQ?
+            # FIXME !!!
+            # FIXME !!!
+        self.note = Note(waves)
     # def play(self) -> numpy.ndarray:
     #     """ """
     #     pass
@@ -571,4 +581,29 @@ if __name__ == '__main__':
     #     play_sound(hol)
     #     play_sound(bal2)
 
-
+    # test 3 step 7
+    # bal = Baliset()
+    # bal.next_notes([("5:4", 0.7, 1), ("6:4", 0.7, 1), ("7:4", 0.7, 1)])
+    #
+    # hol = Holophonor()
+    # hol.next_notes([("5:4", 0.7, 1)])
+    #
+    # bal2 = Baliset()
+    # bal2.next_notes([("5:6", 0.7, 1), ("6:7", 0.7, 1), ("7:8", 0.7, 1),
+    #                  ("7:9", 0.7, 1)])
+    #
+    # gaf = Gaffophone()
+    # gaf.next_notes([("5:4", 0.7, 1), ("6:4", 0.7, 1), ("7:4", 0.7, 1)])
+    #
+    # gaf2 = Gaffophone()
+    # gaf2.next_notes([("5:6", 0.7, 1), ("6:7", 0.7, 1), ("7:8", 0.7, 1)])
+    #
+    # for i in range(1):
+    #     play_sound(bal)
+    #     play_sound(hol)
+    #     play_sound(gaf)
+    #     play_sound(hol)
+    #     play_sound(bal2)
+    #     play_sound(hol)
+    #     play_sound(gaf2)
+    #     play_sound(hol)
