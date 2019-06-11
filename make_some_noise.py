@@ -37,10 +37,12 @@ class SimpleWave:
     def __init__(self, frequency: int,
                  duration: float, amplitude: float) -> None:
         """Initialises the simple wave.
+        Precondition: -1 <= amplitude <= 1
         """
         self.freq = frequency
         self.duration = duration
         self.amp = amplitude
+
         # FIXME WHAT IS DURATION FOR?
 
     def __eq__(self, other: SimpleWave) -> bool:
@@ -69,7 +71,13 @@ class SimpleWave:
         """Return a numpy array which represents a simple sine wave based on the
          frequency and duration of the simple wave.
          """
-        return make_sine_wave_array(self.freq, self.duration) * self.amp
+        wave = make_sine_wave_array(self.freq, self.duration) * self.amp
+        max = abs(wave.max()) if abs(wave.max()) > abs(wave.min()) \
+            else abs(wave.min())
+        # FIXME BIGTIME ?????
+        if max > 1:
+            wave = wave / max
+        return wave
 
 
 class ComplexWave:
@@ -582,28 +590,28 @@ if __name__ == '__main__':
     #     play_sound(bal2)
 
     # test 3 step 7
-    # bal = Baliset()
-    # bal.next_notes([("5:4", 0.7, 1), ("6:4", 0.7, 1), ("7:4", 0.7, 1)])
+    bal = Baliset()
+    bal.next_notes([("5:4", 0.7, 1), ("6:4", 0.7, 1), ("7:4", 0.7, 1)])
+
+    hol = Holophonor()
+    hol.next_notes([("5:4", 0.7, 1)])
+
+    bal2 = Baliset()
+    bal2.next_notes([("5:6", 0.7, 1), ("6:7", 0.7, 1), ("7:8", 0.7, 1),
+                     ("7:9", 0.7, 1)])
+
+    gaf = Gaffophone()
+    gaf.next_notes([("5:4", 0.7, 1), ("6:4", 0.7, 1), ("7:4", 0.7, 1)])
+
+    gaf2 = Gaffophone()
+    gaf2.next_notes([("5:6", 0.7, 1), ("6:7", 0.7, 1), ("7:8", 0.7, 1)])
     #
-    # hol = Holophonor()
-    # hol.next_notes([("5:4", 0.7, 1)])
-    #
-    # bal2 = Baliset()
-    # bal2.next_notes([("5:6", 0.7, 1), ("6:7", 0.7, 1), ("7:8", 0.7, 1),
-    #                  ("7:9", 0.7, 1)])
-    #
-    # gaf = Gaffophone()
-    # gaf.next_notes([("5:4", 0.7, 1), ("6:4", 0.7, 1), ("7:4", 0.7, 1)])
-    #
-    # gaf2 = Gaffophone()
-    # gaf2.next_notes([("5:6", 0.7, 1), ("6:7", 0.7, 1), ("7:8", 0.7, 1)])
-    #
-    # for i in range(1):
-    #     play_sound(bal)
-    #     play_sound(hol)
-    #     play_sound(gaf)
-    #     play_sound(hol)
-    #     play_sound(bal2)
-    #     play_sound(hol)
-    #     play_sound(gaf2)
-    #     play_sound(hol)
+    for i in range(1):
+        play_sound(bal)
+        play_sound(hol)
+        play_sound(gaf)
+        play_sound(hol)
+        play_sound(bal2)
+        play_sound(hol)
+        play_sound(gaf2)
+        play_sound(hol)
