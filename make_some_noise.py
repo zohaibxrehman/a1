@@ -521,9 +521,77 @@ class Gaffophone(Instrument):
 
 
 def play_song(song_file: str, beat: float) -> None:
+    """ """
+    instrument_dict = play_song_helper_1(song_file)
+    argument_dict = play_song_helper_2(instrument_dict, beat)
+    seconds = max(len(argument_dict['Baliset']),
+                  len(argument_dict['Holophoner']),
+                  len(argument_dict['Gaffophone']))
+
+    for second in range(seconds):
+        play_list = []
+        if second < len(argument_dict['Baliset']):
+            b = Baliset()
+            b.next_notes(argument_dict['Baliset'][second])
+            play_list.append(b)
+
+        if second < len(argument_dict['Holophonor']):
+            h = Holophonor()
+            h.next_notes(argument_dict['Holophonor'][second])
+            play_list.append(h)
+
+        if second < len(argument_dict['Gaffophone']):
+            g = Gaffophone()
+            g.next_notes(argument_dict['Gaffophone'][second])
+            play_list.append(g)
+
+        play_sounds(play_list)
+
+
+def play_song_helper_1(song_file: str) -> dict:
     """."""
+    instrument_dict = {}
+    with open(song_file, 'r') as csvfile:
+        reader = csv.reader(csvfile)
+        lines = []
+        for line in reader:
+            lines.append(line)
+    csvfile.close()
+
+    instrument_order = lines[0]
+    note_list = lines[1:]
+
+    for instrument in instrument_order:
+        instrument_dict[instrument] = []
+
+    for note in note_list:
+        for n in range(len(note)):
+            instrument_dict[instrument_order[n]].append(note[n])
+
+    return instrument_dict
 
 
+def play_song_helper_2(instruments: dict, beat: float) -> dict:
+    """"""
+    play_dict = {}
+    for instrument in instruments:
+        play_dict[instrument] = []
+        for note in instruments[instrument]:
+            argument_list = note.strip().split(':')
+            duration = float(argument_list[2]) * beat
+            if argument_list[0] == 'rest':
+                play_dict[instrument].append([each_note])
+            else:
+                ratio = str(argument_list[0]) + ':' + str(argument_list[0])
+                amp = float(argument_list[1])
+                # if duration == 1:
+                #     play_dict[instrument].append([(ratio, amp, duration)])
+                # elif duration < 1:
+                #
+                # each_note = ratio, amp, duration
+                # play_dict[instrument].append([each_note])
+
+    return play_dict
 
 # This is a custom type for type annotations that
 # refers to any of the following classes (do not
@@ -622,3 +690,5 @@ if __name__ == '__main__':
     #     play_sound(hol)
     #     play_sound(gaf2)
     #     play_sound(hol)
+
+    print(play_song('song.csv', 1))
