@@ -37,13 +37,11 @@ class SimpleWave:
     def __init__(self, frequency: int,
                  duration: float, amplitude: float) -> None:
         """Initialises the simple wave.
-        Precondition: -1 <= amplitude <= 1
+        Precondition: 0 <= amplitude <= 1
         """
         self.freq = frequency
         self.duration = duration
         self.amp = amplitude
-
-        # FIXME WHAT IS DURATION FOR?
 
     def __eq__(self, other: SimpleWave) -> bool:
         """Return true if this simple wave and other simple wave are equal.
@@ -61,7 +59,6 @@ class SimpleWave:
                 other: ANYWAVE) -> ComplexWave:
         """add"""
         return ComplexWave([self, other])
-        # FIXME sum of two simple waves.
 
     def get_duration(self) -> float:
         """Return duration of a SimpleWave instance in seconds."""
@@ -71,13 +68,7 @@ class SimpleWave:
         """Return a numpy array which represents a simple sine wave based on the
          frequency and duration of the simple wave.
          """
-        wave = make_sine_wave_array(self.freq, self.duration) * self.amp
-        max = abs(wave.max()) if abs(wave.max()) > abs(wave.min()) \
-            else abs(wave.min())
-        # FIXME BIGTIME ?????
-        if max > 1:
-            wave = wave / max
-        return wave
+        return make_sine_wave_array(self.freq, self.duration) * self.amp
 
 
 class ComplexWave:
@@ -106,8 +97,9 @@ class ComplexWave:
     def play(self) -> numpy.ndarray:
         """Return a numpy array which represents a wave based on the additive
         synthesis of its simple waves.
+
         """
-        if len(self.waves) != 0:
+        if len(self.waves) != 0 and self.play_helper():
             arr = self.waves[0].play()
             for wave in self.waves[1:]:
                 arr = arr + wave.play()
@@ -118,6 +110,19 @@ class ComplexWave:
                 return arr / abs_max
             else:
                 return arr
+
+    def play_helper(self) -> bool:
+        """
+        Helper method for play(). Return true when all the waves have the
+        same duration.
+
+        Precondition: len(self.waves()) > 0
+        """
+        length = self.waves[0].duration
+        for arr in self.waves:
+            if arr.duration != length:
+                return False
+        return True
 
     def get_waves(self) -> typing.List[SimpleWave]:
         """Return a list of SimpleWave instances that can be added together
@@ -206,7 +211,7 @@ class SawtoothWave(ComplexWave):
         waves = []
         for k in range(1, 11):
             waves.append(SimpleWave(k * frequency, duration,
-                                         amplitude / k))
+                                    amplitude / k))
         ComplexWave.__init__(self, waves)
 
     # def __add__(self,
@@ -333,6 +338,8 @@ class StutterNote(Note):
     def __init__(self, frequency: int,
                  duration: float, amplitude: float) -> None:
         """Initialises the stutter note.
+        The number of waves created are rounded down if durations produces a
+        decimal.
         """
         waves = []
         for i in range(int(20 * duration)):
@@ -514,8 +521,8 @@ class Gaffophone(Instrument):
 
 
 def play_song(song_file: str, beat: float) -> None:
-    """ TODO: write a docstring for this function """
-    pass  # TODO: finish this function body
+    """."""
+
 
 
 # This is a custom type for type annotations that
@@ -590,28 +597,28 @@ if __name__ == '__main__':
     #     play_sound(bal2)
 
     # test 3 step 7
-    bal = Baliset()
-    bal.next_notes([("5:4", 0.7, 1), ("6:4", 0.7, 1), ("7:4", 0.7, 1)])
-
-    hol = Holophonor()
-    hol.next_notes([("5:4", 0.7, 1)])
-
-    bal2 = Baliset()
-    bal2.next_notes([("5:6", 0.7, 1), ("6:7", 0.7, 1), ("7:8", 0.7, 1),
-                     ("7:9", 0.7, 1)])
-
-    gaf = Gaffophone()
-    gaf.next_notes([("5:4", 0.7, 1), ("6:4", 0.7, 1), ("7:4", 0.7, 1)])
-
-    gaf2 = Gaffophone()
-    gaf2.next_notes([("5:6", 0.7, 1), ("6:7", 0.7, 1), ("7:8", 0.7, 1)])
+    # bal = Baliset()
+    # bal.next_notes([("5:4", 0.7, 1), ("6:4", 0.7, 1), ("7:4", 0.7, 1)])
     #
-    for i in range(1):
-        play_sound(bal)
-        play_sound(hol)
-        play_sound(gaf)
-        play_sound(hol)
-        play_sound(bal2)
-        play_sound(hol)
-        play_sound(gaf2)
-        play_sound(hol)
+    # hol = Holophonor()
+    # hol.next_notes([("5:4", 0.7, 1)])
+    #
+    # bal2 = Baliset()
+    # bal2.next_notes([("5:6", 0.7, 1), ("6:7", 0.7, 1), ("7:8", 0.7, 1),
+    #                  ("7:9", 0.7, 1)])
+    #
+    # gaf = Gaffophone()
+    # gaf.next_notes([("5:4", 0.7, 1), ("6:4", 0.7, 1), ("7:4", 0.7, 1)])
+    #
+    # gaf2 = Gaffophone()
+    # gaf2.next_notes([("5:6", 0.7, 1), ("6:7", 0.7, 1), ("7:8", 0.7, 1)])
+    # #
+    # for i in range(1):
+    #     play_sound(bal)
+    #     play_sound(hol)
+    #     play_sound(gaf)
+    #     play_sound(hol)
+    #     play_sound(bal2)
+    #     play_sound(hol)
+    #     play_sound(gaf2)
+    #     play_sound(hol)
