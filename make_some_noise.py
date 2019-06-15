@@ -576,21 +576,36 @@ def play_song_helper_2(instruments: dict, beat: float) -> dict:
     play_dict = {}
     for instrument in instruments:
         play_dict[instrument] = []
+        lst = []
+        remain = 0
         for note in instruments[instrument]:
             argument_list = note.strip().split(':')
-            duration = float(argument_list[2]) * beat
+            sample_duration = float(argument_list[2]) * beat
+            amp = 1
+            remain += sample_duration
+            dur = sample_duration
+            if remain > 1:
+                val = remain - 1
+                remain = 1
+                dur = sample_duration - val
             if argument_list[0] == 'rest':
-                play_dict[instrument].append([each_note])
+                phrase = 'rest'
             else:
-                ratio = str(argument_list[0]) + ':' + str(argument_list[0])
+                phrase = str(argument_list[0]) + ':' + str(argument_list[0])
                 amp = float(argument_list[1])
-                # if duration == 1:
-                #     play_dict[instrument].append([(ratio, amp, duration)])
-                # elif duration < 1:
-                #
-                # each_note = ratio, amp, duration
-                # play_dict[instrument].append([each_note])
-
+            if remain == 1:
+                lst.append((phrase, amp, dur))
+                play_dict[instrument].append(lst)
+                remain = val
+                lst = []
+            elif remain < 1:
+                lst.append((phrase, amp, dur))
+            if remain > 1:
+                while remain < 1:
+                    play_dict[instrument].append([(phrase, amp, 1)])
+                    remain -= 1
+                if remain != 0:
+                    lst.append((phrase, amp, remain))
     return play_dict
 
 # This is a custom type for type annotations that
