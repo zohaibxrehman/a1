@@ -300,7 +300,7 @@ class Rest(ComplexWave):
 
     """
     waves: list
-    amplitude: float
+    # amplitude: float
 
     def __init__(self, duration: float) -> None:
         """Initialise the rest"""
@@ -493,13 +493,15 @@ class Holophonor(Instrument):
         to play based on the arguments (see docstring) and store it somewhere
         as a Note object.
         """
+        waves = []
         if len(note_info) != 0:
             ratio_lst = note_info[0][0].strip().split(':')
             if ratio_lst[0] == 'rest':
-                    waves = Rest(note_info[0][2])
+                waves.append(Rest(note_info[0][2]))
+                print('initial rest')
             else:
                 ratio = float(ratio_lst[0]) / float(ratio_lst[1])
-                waves = StutterNote(int(ratio * 65), note_info[0][2], note_info[0][1])
+                waves.append(StutterNote(int(ratio * 65), note_info[0][2], note_info[0][1]))
 
             for info in note_info[1:]:
                 ratio_lst = info[0].strip().split(':')
@@ -507,12 +509,13 @@ class Holophonor(Instrument):
                     ratio = float(ratio_lst[0]) / float(ratio_lst[1])
                     wave = StutterNote(int(ratio * 65), info[2], info[1])
                     # FIXME optimize? int?
-                    waves = waves + wave
+                    print(waves, wave)
+                    waves.append(wave)
                     # FIXME BIGTIME: FLOAT VALUE FOR FREQ?
                 else:
                     wave = Rest(info[2])
-                    waves = waves + wave
-            self.note = waves
+                    waves.append(wave)
+            self.note = Note(waves)
 
     # def play(self) -> numpy.ndarray:
     #     """  """
@@ -580,6 +583,7 @@ def play_song(song_file: str, beat: float) -> None:
 
         if second < len(argument_dict['Holophonor']):
             h = Holophonor()
+            # print(argument_dict['Holophonor'][second])
             h.next_notes(argument_dict['Holophonor'][second])
             play_list.append(h)
 
@@ -636,15 +640,16 @@ def play_song_helper_2(instruments: dict, beat: float) -> dict:
                 remain += sample_duration
                 dur = sample_duration
                 if remain > 1:
-                    val = remain - 1
+                    val = round(remain - 1, 2)
                     remain = 1
-                    dur = sample_duration - val
+                    dur = round(sample_duration - val, 2)
                 if remain == 1:
-                    lst.append((phrase, amp, dur))
+                    if dur != 0:
+                        lst.append((phrase, amp, dur))
                     play_dict[instrument].append(lst)
                     remain += val
                     lst = []
-                elif remain < 1:
+                elif remain < 1 and dur != 0:
                     lst.append((phrase, amp, dur))
                 if remain >= 1:
                     remain -= 1
@@ -652,13 +657,13 @@ def play_song_helper_2(instruments: dict, beat: float) -> dict:
                         play_dict[instrument].append([(phrase, amp, 1)])
                         remain -= 1
                     if remain != 0:
-                        lst.append((phrase, amp, remain))
+                        lst.append((phrase, amp, round(remain, 2)))
                     val = 0
-            if (instruments[instrument].index(note) ==
-                    len(instruments[instrument]) - 1) and remain != 0:
-                lst.append(('rest', 1, 1 - remain))
+            if (instruments[instrument].index(note) == len(instruments[instrument]) - 1) and remain != 0:
+                lst.append(('rest', 1, round(1 - remain, 2)))
                 play_dict[instrument].append(lst)
     return play_dict
+
 
 # This is a custom type for type annotations that
 # refers to any of the following classes (do not
@@ -762,10 +767,18 @@ if __name__ == '__main__':
     # a = play_song_helper_2(s, 0.5)
     # b = play_song_helper_2(s, 1)
 
-    # s = play_song_helper_1('spanish_violin.csv')
-    # a = play_song_helper_2(s, 0.2)
+    s = play_song_helper_1('spanish_violin.csv')
+    a = play_song_helper_2(s, 0.2)
     # b = play_song_helper_2(s, 0.5)
     # print(b['Baliset'][2], b['Holophonor'][2], b['Gaffophone'][2])
-    # play_song('spanish_violin.csv', 0.2)
-
+    play_song('spanish_violin.csv', 0.2)
+    # play_song('swan_lake.csv', 0.2)
     # play_song('song.csv', 0.8)
+    # count = 0
+    # for i in a['Baliset']:
+    #     sum_l = 0
+    #     for q in range(len(i)):
+    #         sum_l += i[q][2]
+    #     count += 1
+    #     print(sum_l)
+    # print(count)
