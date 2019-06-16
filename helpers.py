@@ -35,8 +35,8 @@ pygame.mixer.set_num_channels(_MAX_CHANNELS)
 
 _AVAILABLE_CHANNELS = set()
 for i in range(_MAX_CHANNELS):
-    _AVAILABLE_CHANNELS.add(pygame.mixer.Channel(i))
-
+    channel = pygame.mixer.Channel(i)
+    _AVAILABLE_CHANNELS.add(channel)
 
 @contextmanager
 def _channel() -> None:
@@ -71,8 +71,8 @@ def play_sounds(playables: List[object]) -> None:
         warn(msg)
     for playable in playables:
         _play_sound(playable)
-    time.sleep(1)
-
+    while pygame.mixer.get_busy():
+        time.sleep(0.01)
 
 def make_sine_wave_array(frequency: int, duration: float) -> np.ndarray:
     samples = int(_SAMPLE_RATE * duration)
