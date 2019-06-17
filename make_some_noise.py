@@ -20,9 +20,6 @@ import csv
 import numpy
 from helpers import play_sound, play_sounds, make_sine_wave_array
 
-# TODO MAKE ATTRIBUTES PRIVATE ALONG WITH DOCUMENTATION
-# FIXME play_sound IMPORT
-
 
 class SimpleWave:
     """
@@ -100,7 +97,7 @@ class ComplexWave:
         """
         if isinstance(other, SimpleWave):
             return ComplexWave(self.waves + [other])
-        else:  # isinstance(other, ComplexWave)
+        else:
             return ComplexWave(self.waves + other.waves)
 
     def complexity(self) -> int:
@@ -157,10 +154,10 @@ class ComplexWave:
             lst.append(wave.duration)
         return max(lst)
 
-    def simplify(self) -> None:
-        """REMEMBER: this is not a required part of the assignment
-        """
-        pass
+    # def simplify(self) -> None:
+    #     """REMEMBER: this is not a required part of the assignment
+    #     """
+    #     pass
 
 
 class Note:
@@ -214,7 +211,7 @@ class Note:
                 arr = numpy.append(arr, wave.play())
             return arr * self.amplitude
         else:
-            return numpy.array([])  # FIXME
+            return numpy.array([])
 
 
 class SawtoothWave(ComplexWave):
@@ -468,10 +465,11 @@ def play_song(song_file: str, beat: float) -> None:
     """
     instrument_dict = _play_song_helper_1(song_file)
     argument_dict = _play_song_helper_2(instrument_dict, beat)
+
     seconds = max(len(argument_dict['Baliset']),
                   len(argument_dict['Holophonor']),
                   len(argument_dict['Gaffophone']))
-
+    play_lists = []
     for second in range(seconds):
         play_list = []
         if second < len(argument_dict['Baliset']):
@@ -488,7 +486,9 @@ def play_song(song_file: str, beat: float) -> None:
             g = Gaffophone()
             g.next_notes(argument_dict['Gaffophone'][second])
             play_list.append(g)
+        play_lists.append(play_list)
 
+    for play_list in play_lists:
         play_sounds(play_list)
 
 
@@ -589,112 +589,6 @@ ANYWAVE = typing.TypeVar('ANYWAVE',
 
 if __name__ == '__main__':
     import python_ta
-    # python_ta.check_all(config={'extra-imports': ['helpers',
-    #                                               'typing',
-    #                                               'csv',
-    #                                               'numpy'],
-    #                             'disable': ['E9997']})
-
-    # test step 4
-    # waves = []
-    # for i in range(1, 6):
-    #     waves.append(SimpleWave(440 * i, 1, 1))
-    # complex1 = ComplexWave(waves[:2])
-    # complex2 = ComplexWave(waves[2:])
-    # my_note = Note([complex1, complex2])
-    # play_sound(my_note)
-
-    # debug
-    # sawtooth = SawtoothWave(440, 1, 1)
-    # play_sound(sawtooth)
-
-    # test step 5
-    # sawtooth = SawtoothWave(440, 1, 1)
-    # square = SquareWave(440, 1, 1)
-    # rest = Rest(1)
-    # play_sound(sawtooth)
-    # play_sound(rest)
-    # play_sound(square)
-
-    # make sawtooth list
-    # waves = []
-    # for k in range(1, 11):
-    #     waves.append(SimpleWave(k * 440, 1 / k, 1))
-    # for wave in waves:
-    #     print(wave.freq)
-
-    # test step 6 stutternote
-    # my_note = StutterNote(440, 1.01, 1)
-    # play_sound(my_note)
-
-    # test step 7
-    # bal = Baliset()
-    # bal.next_notes([("5:4", 0.7, 1)])
-    # play_sound(bal)
-
-    # test 2 step 7
-    # bal = Baliset()
-    # bal.next_notes([("5:4", 0.7, 1), ("6:4", 0.7, 1), ("7:4", 0.7, 1)])
-    #
-    # hol = Holophonor()
-    # hol.next_notes([("5:4", 0.7, 1), ("6:4", 0.7, 1)])
-    #
-    # bal2 = Baliset()
-    # bal2.next_notes([("5:6", 0.7, 1), ("6:7", 0.7, 1), ("7:8", 0.7, 1),
-    #                  ("7:9", 0.7, 1)])
-    #
-    # for i in range(2):
-    #     play_sound(bal)
-    #     play_sound(hol)
-    #     play_sound(bal2)
-
-    # test 3 step 7
-    # bal = Baliset()
-    # bal.next_notes([("5:4", 0.7, 0.1), ("6:4", 0.7, 0.1), ("7:4", 0.7, 0.1)])
-    #
-    # hol = Holophonor()
-    # hol.next_notes([("5:4", 0.7, 0.1)])
-    #
-    # bal2 = Baliset()
-    # bal2.next_notes([("5:6", 0.7, 0.1), ("6:7", 0.7, 0.1), ("7:8", 0.7, 0.1),
-    #                  ("7:9", 0.7, 0.1)])
-    #
-    # gaf = Gaffophone()
-    # gaf.next_notes([("5:4", 0.7, 0.1), ("6:4", 0.7, 0.1), ("7:4", 0.7, 0.1)])
-    #
-    # gaf2 = Gaffophone()
-    # gaf2.next_notes([("5:6", 0.7, 0.1), ("6:7", 0.7, 0.1), ("7:8", 0.7, 0.1)])
-    # #
-    # for i in range(20):
-    #     play_sound(bal)
-    #     play_sound(hol)
-    #     play_sound(gaf)
-    #     play_sound(hol)
-    #     play_sound(bal2)
-    #     play_sound(hol)
-    #     play_sound(gaf2)
-    #     play_sound(hol)
-
-    # s = play_song_helper_1('song.csv')
-    # a = play_song_helper_2(s, 0.5)
-    # b = play_song_helper_2(s, 1)
-
-    # s = _play_song_helper_1('spanish_violin.csv')
-    # a = _play_song_helper_2(s, 0.2)
-    # b = play_song_helper_2(s, 0.5)
-    # print(b['Baliset'][2], b['Holophonor'][2], b['Gaffophone'][2])
-    # play_song('spanish_violin.csv', 0.2)
-    # play_song('swan_lake.csv', 0.2)
-    # play_song('song.csv', 0.5)
-    # count = 0
-    # h = 'Holophonor'
-    # b = 'Baliset'
-    # g = 'Gaffophone'
-    # for i in a[h]:
-    #     sum_l = 0
-    #     for q in range(len(i)):
-    #         sum_l += i[q][2]
-    #     count += 1
-    #     print(sum_l)
-    # print(count)
-    # print(count)
+    python_ta.check_all(
+        config={'extra-imports': ['helpers', 'typing', 'csv', 'numpy'],
+                'disable': ['E9997', 'E9998']})
