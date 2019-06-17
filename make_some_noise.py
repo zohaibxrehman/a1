@@ -119,12 +119,15 @@ class ComplexWave:
                 elif size < wave_arr.size:
                     arr.resize(wave_arr.shape)
                 arr = arr + wave_arr
-            abs_max = abs(arr.max()) if abs(arr.max()) > abs(arr.min()) \
-                else abs(arr.min())
-            if abs_max != 0:
-                return arr / abs_max
-            else:
+            if arr.size == 0:
                 return arr
+            else:
+                abs_max = abs(arr.max()) if abs(arr.max()) > abs(arr.min()) \
+                    else abs(arr.min())
+                if abs_max != 0:
+                    return arr / abs_max
+                else:
+                    return arr
         else:
             return numpy.array([])
 
@@ -153,11 +156,6 @@ class ComplexWave:
         for wave in self.waves:
             lst.append(wave.duration)
         return max(lst)
-
-    # def simplify(self) -> None:
-    #     """REMEMBER: this is not a required part of the assignment
-    #     """
-    #     pass
 
 
 class Note:
@@ -465,6 +463,7 @@ def play_song(song_file: str, beat: float) -> None:
     """
     instrument_dict = _play_song_helper_1(song_file)
     argument_dict = _play_song_helper_2(instrument_dict, beat)
+    print(argument_dict)
 
     seconds = max(len(argument_dict['Baliset']),
                   len(argument_dict['Holophonor']),
@@ -536,7 +535,7 @@ def _play_song_helper_2_instrument(play_dict: dict, instrument: str,
     remain = 0
     val = 0
     i = 0
-    while i < len(instruments[instrument]) and\
+    while i < len(instruments[instrument]) and \
             len(instruments[instrument][i]) != 0:
         note = instruments[instrument][i]
         argument_list = note.strip().split(':')
@@ -591,4 +590,4 @@ if __name__ == '__main__':
     import python_ta
     python_ta.check_all(
         config={'extra-imports': ['helpers', 'typing', 'csv', 'numpy'],
-                'disable': ['E9997', 'E9998']})
+                'disable': ['E9997', 'E9998', 'W0611']})
