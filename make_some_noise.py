@@ -28,35 +28,36 @@ class SimpleWave:
     A sine wave.
 
     === Attributes ===
-    freq: frequency of the simple wave
+    frequency: frequency of the simple wave
     duration: duration of the simple wave
-    amp: amplitude of the simple wave
+    amplitude: amplitude of the simple wave
     """
-    freq: int
+    frequency: int
     duration: float
-    amp: float
+    amplitude: float
 
     def __init__(self, frequency: int,
                  duration: float, amplitude: float) -> None:
         """Initialises the simple wave.
         Precondition: 0 <= amplitude <= 1
         """
-        self.freq = frequency
+        self.frequency = frequency
         self.duration = duration
-        self.amp = amplitude
+        self.amplitude = amplitude
 
     def __eq__(self, other: SimpleWave) -> bool:
         """Return true if this simple wave and other simple wave are equal.
         """
-        return (self.freq == other.freq and self.duration == other.duration and
-                self.amp == other.amp)
+        return (self.frequency == other.frequency and
+                self.duration == other.duration and
+                self.amplitude == other.amplitude)
 
     def __ne__(self, other: SimpleWave) -> bool:
         """Return true if this simple wave and other simple wave are not
         equal.
         """
-        return not (self.freq == other.freq and self.duration ==
-                    other.duration and self.amp == other.amp)
+        return not (self.frequency == other.frequency and self.duration ==
+                    other.duration and self.amplitude == other.amplitude)
 
     def __add__(self,
                 other: ANYWAVE) -> ComplexWave:
@@ -72,7 +73,8 @@ class SimpleWave:
         """Return a numpy array which represents a simple sine wave based on the
          frequency and duration of the simple wave.
          """
-        return make_sine_wave_array(self.freq, self.duration) * self.amp
+        return make_sine_wave_array(self.frequency,
+                                    self.duration) * self.amplitude
 
 
 class ComplexWave:
@@ -87,7 +89,7 @@ class ComplexWave:
     def __init__(self, waves: typing.List[SimpleWave]) -> None:
         """Initialises the complex wave.
         Precondition: duration of each simple wave should be
-        equal and len(waves) > 0.
+        equal.
         """
         self.waves = waves
 
@@ -120,8 +122,10 @@ class ComplexWave:
                 return arr / abs_max
             else:
                 return arr
+        elif len(self.waves) == 0:
+            return numpy.array([])
         else:
-            return # FIXME
+            raise ValueError
 
     def _play_helper(self) -> bool:
         """
@@ -198,14 +202,17 @@ class Note:
         return dur
 
     def play(self) -> numpy.ndarray:
-        """Return a numpy array which represents the note."""
+        """Return a numpy array which represents the note.
+        """
         if len(self.waves) != 0:
             arr = self.waves[0].play()
             for wave in self.waves[1:]:
                 arr = numpy.append(arr, wave.play())
             return arr * self.amplitude
         else:
-            return # FIXME
+            return numpy.array([]) # FIXME
+        # else:
+        #     raise EmptyList
 
 
 class SawtoothWave(ComplexWave):
@@ -284,25 +291,36 @@ class StutterNote(Note):
         decimal.
         """
         waves = []
-        for i in range(int(20 * duration)):
-            waves.append(SawtoothWave(frequency, 1/40, amplitude))
-            waves.append(Rest(1 / 40))
-
-        remainder = 20 * duration - int(20 * duration)
-        number_of_loops = int(remainder / 0.025)
-        super_remainder = remainder % 0.025
         last_created = ''
-        for i in range(number_of_loops):
+        count = 0
+        for i in range(int(duration / (1 / 40))):
             if i % 2 == 0:
-                waves.append(SawtoothWave(frequency, 1/40, amplitude))
+                waves.append(SawtoothWave(frequency, 1 / 40, amplitude))
                 last_created = 'sawtooth'
             else:
                 waves.append(Rest(1 / 40))
                 last_created = 'rest'
-        if last_created == 'rest':
-            waves.append(SawtoothWave(frequency, super_remainder, amplitude))
-        elif last_created == 'sawtooth':
-            waves.append(Rest(super_remainder))
+            count += 0.025
+        # remainder = duration - count
+        # remainder = duration - int(duration)
+        # number_of_loops = int(remainder / 0.025)
+        # remainder = duration % (1 / 40)
+        remainder = round(duration - int(duration / (1 / 40)) * (1/40), 4)
+        # remainder = duration % (1 / 40)
+
+        # for i in range(number_of_loops):
+        #     if last_created == 'rest':
+        #         waves.append(SawtoothWave(frequency, 1/40, amplitude))
+        #         last_created = 'sawtooth'
+        #     else:
+        #         waves.append(Rest(1 / 40))
+        #         last_created = 'rest'
+        if last_created == 'rest' and remainder != 0.0:
+            waves.append(SawtoothWave(frequency, remainder, amplitude))
+        elif last_created == 'sawtooth' and remainder != 0.0:
+            waves.append(Rest(remainder))
+        # for wave in waves:
+            # print(wave.get_duration())
 
         Note.__init__(self, waves)
         self.amplitude = amplitude
@@ -476,13 +494,13 @@ def play_song(song_file: str, beat: float) -> None:
 
         if second < len(argument_dict['Holophonor']):
             h = Holophonor()
-            h.next_notes(argument_dict['Holophonor'][second])
-            play_list.append(h)
+            # h.next_notes(argument_dict['Holophonor'][second])
+            # play_list.append(h)
 
         if second < len(argument_dict['Gaffophone']):
             g = Gaffophone()
-            g.next_notes(argument_dict['Gaffophone'][second])
-            play_list.append(g)
+            # g.next_notes(argument_dict['Gaffophone'][second])
+            # play_list.append(g)
 
         play_sounds(play_list)
 
@@ -573,11 +591,11 @@ ANYWAVE = typing.TypeVar('ANYWAVE',
 
 if __name__ == '__main__':
     import python_ta
-    python_ta.check_all(config={'extra-imports': ['helpers',
-                                                  'typing',
-                                                  'csv',
-                                                  'numpy'],
-                                'disable': ['E9997']})
+    # python_ta.check_all(config={'extra-imports': ['helpers',
+    #                                               'typing',
+    #                                               'csv',
+    #                                               'numpy'],
+    #                             'disable': ['E9997']})
 
     # test step 4
     # waves = []
@@ -608,7 +626,7 @@ if __name__ == '__main__':
     #     print(wave.freq)
 
     # test step 6 stutternote
-    # my_note = StutterNote(440, 1, 1)
+    # my_note = StutterNote(440, 1.01, 1)
     # play_sound(my_note)
 
     # test step 7
@@ -634,28 +652,28 @@ if __name__ == '__main__':
 
     # test 3 step 7
     # bal = Baliset()
-    # bal.next_notes([("5:4", 0.7, 1), ("6:4", 0.7, 1), ("7:4", 0.7, 1)])
+    # bal.next_notes([("5:4", 0.7, 0.1), ("6:4", 0.7, 0.1), ("7:4", 0.7, 0.1)])
     #
     # hol = Holophonor()
-    # hol.next_notes([("5:4", 0.7, 1)])
+    # hol.next_notes([("5:4", 0.7, 0.1)])
     #
     # bal2 = Baliset()
-    # bal2.next_notes([("5:6", 0.7, 1), ("6:7", 0.7, 1), ("7:8", 0.7, 1),
-    #                  ("7:9", 0.7, 1)])
+    # bal2.next_notes([("5:6", 0.7, 0.1), ("6:7", 0.7, 0.1), ("7:8", 0.7, 0.1),
+    #                  ("7:9", 0.7, 0.1)])
     #
     # gaf = Gaffophone()
-    # gaf.next_notes([("5:4", 0.7, 1), ("6:4", 0.7, 1), ("7:4", 0.7, 1)])
+    # gaf.next_notes([("5:4", 0.7, 0.1), ("6:4", 0.7, 0.1), ("7:4", 0.7, 0.1)])
     #
     # gaf2 = Gaffophone()
-    # gaf2.next_notes([("5:6", 0.7, 1), ("6:7", 0.7, 1), ("7:8", 0.7, 1)])
+    # gaf2.next_notes([("5:6", 0.7, 0.1), ("6:7", 0.7, 0.1), ("7:8", 0.7, 0.1)])
     # #
-    # for i in range(1):
+    # for i in range(20):
     #     play_sound(bal)
     #     play_sound(hol)
     #     play_sound(gaf)
     #     play_sound(hol)
     #     play_sound(bal2)
-    #     play_sound(hol)-+9
+    #     play_sound(hol)
     #     play_sound(gaf2)
     #     play_sound(hol)
 
@@ -663,18 +681,22 @@ if __name__ == '__main__':
     # a = play_song_helper_2(s, 0.5)
     # b = play_song_helper_2(s, 1)
 
-    # s = play_song_helper_1('spanish_violin.csv')
-    # a = play_song_helper_2(s, 0.2)
+    s = _play_song_helper_1('spanish_violin.csv')
+    a = _play_song_helper_2(s, 0.2)
     # b = play_song_helper_2(s, 0.5)
     # print(b['Baliset'][2], b['Holophonor'][2], b['Gaffophone'][2])
-    # play_song('spanish_violin.csv', 0.2)
+    play_song('spanish_violin.csv', 0.2)
     # play_song('swan_lake.csv', 0.2)
-    # play_song('song.csv', 0.8)
-    # count = 0
-    # for i in a['Baliset']:
-    #     sum_l = 0
-    #     for q in range(len(i)):
-    #         sum_l += i[q][2]
-    #     count += 1
-    #     print(sum_l)
+    # play_song('song.csv', 0.5)
+    count = 0
+    h = 'Holophonor'
+    b = 'Baliset'
+    g = 'Gaffophone'
+    for i in a[h]:
+        sum_l = 0
+        for q in range(len(i)):
+            sum_l += i[q][2]
+        count += 1
+        print(sum_l)
+    print(count)
     # print(count)
