@@ -21,6 +21,7 @@ import numpy
 from helpers import play_sound, play_sounds, make_sine_wave_array
 
 # TODO MAKE ATTRIBUTES PRIVATE ALONG WITH DOCUMENTATION
+# FIXME play_sound IMPORT
 
 
 class SimpleWave:
@@ -111,21 +112,24 @@ class ComplexWave:
         """Return a numpy array which represents a wave based on the additive
         synthesis of its simple waves.
         """
-        if len(self.waves) != 0 and self._play_helper():
+        if len(self.waves) != 0:
             arr = self.waves[0].play()
             for wave in self.waves[1:]:
-                arr = arr + wave.play()
-                #  numpy.add?
+                size = arr.size
+                wave_arr = wave.play()
+                if size > wave_arr.size:
+                    wave_arr.resize(arr.shape)
+                elif size < wave_arr.size:
+                    arr.resize(wave_arr.shape)
+                arr = arr + wave_arr
             abs_max = abs(arr.max()) if abs(arr.max()) > abs(arr.min()) \
                 else abs(arr.min())
             if abs_max != 0:
                 return arr / abs_max
             else:
                 return arr
-        elif len(self.waves) == 0:
-            return numpy.array([])
         else:
-            raise ValueError
+            return numpy.array([])
 
     def _play_helper(self) -> bool:
         """
@@ -210,9 +214,7 @@ class Note:
                 arr = numpy.append(arr, wave.play())
             return arr * self.amplitude
         else:
-            return numpy.array([]) # FIXME
-        # else:
-        #     raise EmptyList
+            return numpy.array([])  # FIXME
 
 
 class SawtoothWave(ComplexWave):
@@ -301,26 +303,12 @@ class StutterNote(Note):
                 waves.append(Rest(1 / 40))
                 last_created = 'rest'
             count += 0.025
-        # remainder = duration - count
-        # remainder = duration - int(duration)
-        # number_of_loops = int(remainder / 0.025)
-        # remainder = duration % (1 / 40)
-        remainder = round(duration - int(duration / (1 / 40)) * (1/40), 4)
-        # remainder = duration % (1 / 40)
 
-        # for i in range(number_of_loops):
-        #     if last_created == 'rest':
-        #         waves.append(SawtoothWave(frequency, 1/40, amplitude))
-        #         last_created = 'sawtooth'
-        #     else:
-        #         waves.append(Rest(1 / 40))
-        #         last_created = 'rest'
+        remainder = round(duration - int(duration / (1 / 40)) * (1/40), 4)
         if last_created == 'rest' and remainder != 0.0:
             waves.append(SawtoothWave(frequency, remainder, amplitude))
         elif last_created == 'sawtooth' and remainder != 0.0:
             waves.append(Rest(remainder))
-        # for wave in waves:
-            # print(wave.get_duration())
 
         Note.__init__(self, waves)
         self.amplitude = amplitude
@@ -420,7 +408,6 @@ class Holophonor(Instrument):
             ratio_lst = note_info[0][0].strip().split(':')
             if ratio_lst[0] == 'rest':
                 waves.append(Rest(note_info[0][2]))
-                # print('initial rest')
             else:
                 ratio = float(ratio_lst[0]) / float(ratio_lst[1])
                 waves.append(StutterNote(int(ratio * 65), note_info[0][2],
@@ -494,13 +481,13 @@ def play_song(song_file: str, beat: float) -> None:
 
         if second < len(argument_dict['Holophonor']):
             h = Holophonor()
-            # h.next_notes(argument_dict['Holophonor'][second])
-            # play_list.append(h)
+            h.next_notes(argument_dict['Holophonor'][second])
+            play_list.append(h)
 
         if second < len(argument_dict['Gaffophone']):
             g = Gaffophone()
-            # g.next_notes(argument_dict['Gaffophone'][second])
-            # play_list.append(g)
+            g.next_notes(argument_dict['Gaffophone'][second])
+            play_list.append(g)
 
         play_sounds(play_list)
 
@@ -535,48 +522,59 @@ def _play_song_helper_2(instruments: dict, beat: float) -> dict:
     """
     play_dict = {}
     for instrument in instruments:
-        play_dict[instrument] = []
-        lst = []
-        remain = 0
-        val = 0
-        for note in instruments[instrument]:
-            if len(note) != 0:
-                argument_list = note.strip().split(':')
-                amp = 1
-                if argument_list[0] == 'rest':
-                    phrase = 'rest'
-                    sample_duration = float(argument_list[1]) * beat
-                else:
-                    phrase = str(argument_list[0]) + ':' + str(argument_list[1])
-                    sample_duration = float(argument_list[3]) * beat
-                    amp = float(argument_list[2])
-                remain += sample_duration
-                dur = round(sample_duration, 2)
-                if remain > 1:
-                    val = round(remain - 1, 2)
-                    remain = 1
-                    dur = round(sample_duration - val, 2)
-                if remain == 1:
-                    if dur != 0:
-                        lst.append((phrase, amp, dur))
-                    play_dict[instrument].append(lst)
-                    remain += val
-                    lst = []
-                elif remain < 1 and dur != 0:
-                    lst.append((phrase, amp, dur))
-                if remain >= 1:
-                    remain -= 1
-                    while remain >= 1:
-                        play_dict[instrument].append([(phrase, amp, 1)])
-                        remain -= 1
-                    if remain != 0:
-                        lst.append((phrase, amp, round(remain, 2)))
-                    val = 0
-            if (instruments[instrument].index(note) == len(
-                    instruments[instrument]) - 1) and remain != 0:
-                lst.append(('rest', 1, round(1 - remain, 2)))
-                play_dict[instrument].append(lst)
+        _play_song_helper_2_instrument(play_dict, instrument, instruments, beat)
     return play_dict
+
+
+def _play_song_helper_2_instrument(play_dict: dict, instrument: str,
+                                   instruments: dict, beat: float) -> None:
+    """
+     Helper function for _play_song_helper_2 for one instrument.
+    """
+    play_dict[instrument] = []
+    lst = []
+    remain = 0
+    val = 0
+    i = 0
+    while i < len(instruments[instrument]) and\
+            len(instruments[instrument][i]) != 0:
+        note = instruments[instrument][i]
+        argument_list = note.strip().split(':')
+        amp = 1
+        if argument_list[0] == 'rest':
+            phrase = 'rest'
+            sample_duration = float(argument_list[1]) * beat
+        else:
+            phrase = str(argument_list[0]) + ':' + str(argument_list[1])
+            sample_duration = float(argument_list[3]) * beat
+            amp = float(argument_list[2])
+        remain += sample_duration
+        dur = round(sample_duration, 2)
+        if remain > 1:
+            val = round(remain - 1, 2)
+            remain = 1
+            dur = round(sample_duration - val, 2)
+        if remain == 1:
+            if dur != 0:
+                lst.append((phrase, amp, dur))
+            play_dict[instrument].append(lst)
+            remain += val
+            lst = []
+        elif remain < 1 and dur != 0:
+            lst.append((phrase, amp, dur))
+        if remain >= 1:
+            remain -= 1
+            while remain >= 1:
+                play_dict[instrument].append([(phrase, amp, 1)])
+                remain -= 1
+            if remain != 0:
+                lst.append((phrase, amp, round(remain, 2)))
+            val = 0
+        if (instruments[instrument].index(note) == len(
+                instruments[instrument]) - 1) and remain != 0:
+            lst.append(('rest', 1, round(1 - remain, 2)))
+            play_dict[instrument].append(lst)
+        i = i + 1
 
 
 # This is a custom type for type annotations that
@@ -681,22 +679,22 @@ if __name__ == '__main__':
     # a = play_song_helper_2(s, 0.5)
     # b = play_song_helper_2(s, 1)
 
-    s = _play_song_helper_1('spanish_violin.csv')
-    a = _play_song_helper_2(s, 0.2)
+    # s = _play_song_helper_1('spanish_violin.csv')
+    # a = _play_song_helper_2(s, 0.2)
     # b = play_song_helper_2(s, 0.5)
     # print(b['Baliset'][2], b['Holophonor'][2], b['Gaffophone'][2])
-    play_song('spanish_violin.csv', 0.2)
+    # play_song('spanish_violin.csv', 0.2)
     # play_song('swan_lake.csv', 0.2)
     # play_song('song.csv', 0.5)
-    count = 0
-    h = 'Holophonor'
-    b = 'Baliset'
-    g = 'Gaffophone'
-    for i in a[h]:
-        sum_l = 0
-        for q in range(len(i)):
-            sum_l += i[q][2]
-        count += 1
-        print(sum_l)
-    print(count)
+    # count = 0
+    # h = 'Holophonor'
+    # b = 'Baliset'
+    # g = 'Gaffophone'
+    # for i in a[h]:
+    #     sum_l = 0
+    #     for q in range(len(i)):
+    #         sum_l += i[q][2]
+    #     count += 1
+    #     print(sum_l)
+    # print(count)
     # print(count)
