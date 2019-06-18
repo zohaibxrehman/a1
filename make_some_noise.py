@@ -132,19 +132,6 @@ class ComplexWave:
         else:
             return numpy.array([])
 
-    def _play_helper(self) -> bool:
-        """
-        Helper method for play(). Return true when all the waves have the
-        same duration.
-
-        Precondition: len(self.waves()) > 0
-        """
-        length = self.get_waves()[0].get_duration()
-        for arr in self.get_waves():
-            if arr.get_duration() != length:
-                return False
-        return True
-
     def get_waves(self) -> typing.List[SimpleWave]:
         """Return a list of SimpleWave instances that can be added together
         to represent a ComplexWave instance."""
@@ -210,7 +197,15 @@ class Note:
             arr = self.get_waves()[0].play()
             for wave in self.get_waves()[1:]:
                 arr = numpy.append(arr, wave.play())
-            return arr * self.amplitude
+            if arr.size == 0:
+                return arr
+            else:
+                abs_max = abs(arr.max()) if abs(arr.max()) > abs(arr.min()) \
+                    else abs(arr.min())
+                if abs_max != 0:
+                    return arr * (self.amplitude / abs_max)
+                else:
+                    return arr
         else:
             return numpy.array([])
 
@@ -228,6 +223,7 @@ class SawtoothWave(ComplexWave):
     def __init__(self, frequency: int,
                  duration: float, amplitude: float) -> None:
         """Initialises the sawtooth wave.
+        Precondition: 0 <= amplitude <= 1
         """
         waves = []
         for k in range(1, 11):
@@ -250,6 +246,7 @@ class SquareWave(ComplexWave):
     def __init__(self, frequency: int,
                  duration: float, amplitude: float) -> None:
         """Initialises the square wave.
+        Precondition: 0 <= amplitude <= 1
         """
         waves = []
         for k in range(1, 11):
@@ -291,6 +288,7 @@ class StutterNote(Note):
         """Initialises the stutter note.
         The number of waves created are rounded down if durations produces a
         decimal.
+        Precondition: 0 <= amplitude <= 1
         """
         waves = []
         last_created = ''
@@ -583,6 +581,7 @@ ANYWAVE = typing.TypeVar('ANYWAVE',
 
 if __name__ == '__main__':
     import python_ta
-    python_ta.check_all(
-        config={'extra-imports': ['helpers', 'typing', 'csv', 'numpy'],
-                'disable': ['E9997', 'E9998', 'W0611']})
+    # python_ta.check_all(
+    #     config={'extra-imports': ['helpers', 'typing', 'csv', 'numpy'],
+    #             'disable': ['E9997', 'E9998', 'W0611']})
+    # play_song('spanish_violin.csv', 0.2)

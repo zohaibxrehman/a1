@@ -40,7 +40,7 @@ def test_complex_wave_add():
     waves = c3.get_waves()
     assert len(waves) == 2
     assert any(s1 == s for s in waves)
-    assert any(s2 == s for s in waves)    
+    assert any(s2 == s for s in waves)
 
 def test_complex_wave_complexity():
     s1 = noise.SimpleWave(100, 1, 1)
@@ -72,8 +72,8 @@ def test_complex_wave_play():
 def test_complex_wave_get_duration():
     s1 = noise.SimpleWave(100, 0.8, 0.7)
     s2 = noise.SimpleWave(190, 0.8, 1)
-    c1 = noise.ComplexWave([s1, s2]) 
-    assert abs(c1.get_duration() - 0.8) < 0.0001    
+    c1 = noise.ComplexWave([s1, s2])
+    assert abs(c1.get_duration() - 0.8) < 0.0001
 
 def test_complex_wave_simplify():
     s1 = noise.SimpleWave(100, 1, 1)
@@ -98,7 +98,7 @@ def test_note_get_waves():
     s2 = noise.SimpleWave(101, 1, 1)
     n1 = noise.Note([s1, s2])
     assert n1.get_waves()[0] == s1
-    assert n1.get_waves()[1] == s2    
+    assert n1.get_waves()[1] == s2
 
 def test_note_get_duration():
     s1 = noise.SimpleWave(100, 1, 1)
@@ -111,7 +111,7 @@ def test_note_play():
     s2 = noise.SimpleWave(101, 1, 1)
     n1 = noise.Note([s1, s2])
     assert n1.play().max() <= 1
-    assert n1.play().min() >= -1 
+    assert n1.play().min() >= -1
 
 def test_note_change_amplitude():
     s1 = noise.SimpleWave(100, 1, 0.5)
@@ -143,7 +143,7 @@ def test_sawtooth_complexity():
 def test_sawtooth_play():
     st1 = noise.SawtoothWave(100, 1, 3)
     assert st1.play().max() <= 1
-    assert st1.play().min() >= -1 
+    assert st1.play().min() >= -1
 
 def test_sawtooth_get_duration():
     st1 = noise.SawtoothWave(500, 100, 1)
@@ -172,7 +172,7 @@ def test_square_complexity():
 def test_square_play():
     sq1 = noise.SquareWave(100, 1, 3)
     assert sq1.play().max() <= 1
-    assert sq1.play().min() >= -1 
+    assert sq1.play().min() >= -1
 
 def test_square_get_duration():
     st1 = noise.SquareWave(500, 100, 1)
@@ -286,4 +286,4 @@ def test_gaffophone_play():
 
 if __name__ == '__main__':
     import pytest
-    pytest.main('testing_handout.py')
+    pytest.main(['testing_handout.py'])
