@@ -33,9 +33,9 @@ class test_simplewave(unittest.TestCase):
         temp = self.simple + self.simple2
         self.assertEqual(True, len(self.complex.get_waves()) == 2)
         temp_waves = temp.get_waves()
-        sorted(temp_waves, key=lambda x:x.duration)
+        sorted(temp_waves, key=lambda x:x.get_duration())
         exp = self.complex.get_waves()
-        sorted(exp, key = lambda x:x.duration)
+        sorted(exp, key = lambda x:x.get_duration())
         res = exp == temp_waves
         self.assertTrue(res, "You wave produced under addition should have exact same waves as its operands")
         self.assertEqual(True, isinstance(self.simple + self.complex, ComplexWave), "You should have a complex wave when you add a simple with a complex")
@@ -82,9 +82,9 @@ class test_complexwave(unittest.TestCase):
         self.assertTrue(self.complex4.get_duration() == 1)
         self.assertTrue(self.complex2.get_waves()[:2] == self.complex.get_waves())
         waves = (self.complex + self.simple).get_waves()
-        sorted(waves, key=lambda x:x.frequency)
+        sorted(waves, key=lambda x:x._frequency)
         temp = self.complex.get_waves() + [self.simple]
-        sorted(temp, key=lambda x:x.frequency)
+        sorted(temp, key=lambda x:x._frequency)
         self.assertTrue(temp == waves)
 
     def test_get_duration(self):
@@ -189,9 +189,9 @@ class test_sawtooth(unittest.TestCase):
         self.assertTrue(len(self.saw.get_waves()) == 10)
         self.assertTrue(self.saw.get_duration() == 2.2)
         waves = [wave for wave in self.saw.get_waves()]
-        waves_freq = [(wave.frequency // 150) for wave in waves]
+        waves_freq = [(wave._frequency // 150) for wave in waves]
         self.assertCountEqual(waves_freq,[i for i in range(1,11)])
-        waves_amp = [wave.amplitude for wave in waves]
+        waves_amp = [wave._amplitude for wave in waves]
         self.assertCountEqual(waves_amp, [0.8 / i for i in range(1, 11)])
 
     def test_complexity(self):
@@ -230,9 +230,9 @@ class test_square(unittest.TestCase):
         self.assertTrue(len(self.squ.get_waves()) == 10)
         self.assertTrue(self.squ.get_duration() == 2.2)
         waves = [wave for wave in self.squ.get_waves()]
-        waves_freq = [(wave.frequency // 150) for wave in waves]
+        waves_freq = [(wave._frequency // 150) for wave in waves]
         self.assertCountEqual(waves_freq,[i for i in range(1,20,2)])
-        waves_amp = [wave.amplitude for wave in waves]
+        waves_amp = [wave._amplitude for wave in waves]
         self.assertCountEqual(waves_amp, [0.8 / i for i in range(1, 20,2)])
 
     def test_complexity(self):
