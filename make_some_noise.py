@@ -583,7 +583,6 @@ ANYWAVE = typing.TypeVar('ANYWAVE',
 
 if __name__ == '__main__':
     import python_ta
-    # python_ta.check_all(
-    #     config={'extra-imports': ['helpers', 'typing', 'csv', 'numpy'],
-    #             'disable': ['E9997', 'E9998', 'W0611']})
-    play_song('swan_lake.csv', 0.2)
+    python_ta.check_all(
+        config={'extra-imports': ['helpers', 'typing', 'csv', 'numpy'],
+                'disable': ['E9997', 'E9998', 'W0611']})
