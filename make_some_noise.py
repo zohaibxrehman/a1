@@ -473,7 +473,6 @@ def play_song(song_file: str, beat: float) -> None:
     g = Gaffophone()
     for second in range(seconds):
         play_list = []
-
         if second < len(argument_dict['Baliset']):
             bal.next_notes(argument_dict['Baliset'][second])
             play_list.append(bal)
@@ -552,7 +551,8 @@ def _play_song_helper_2_instrument(play_dict: dict, instrument: str,
             remain = 1
             dur = sample_duration - val
         if remain == 1:
-            lst.append((phrase, amp, dur))
+            if dur != 0:
+                lst.append((phrase, amp, dur))
             play_dict[instrument].append(lst)
             remain += val
             lst = []
@@ -566,8 +566,10 @@ def _play_song_helper_2_instrument(play_dict: dict, instrument: str,
             if remain != 0:
                 lst.append((phrase, amp, remain))
             val = 0
-        if (instruments[instrument].index(note) == len(
-                instruments[instrument]) - 1) and remain != 0:
+
+        if remain != 0 and ((instruments[instrument].index(note) ==
+                             len(instruments[instrument]) - 1) or
+                            len(instruments[instrument][i + 1]) == 0):
             lst.append(('rest', 1, 1 - remain))
             play_dict[instrument].append(lst)
         i = i + 1
